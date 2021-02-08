@@ -1,0 +1,13 @@
+.custom {
+  border-radius: 25px;
+  background: #d9f7f7;
+  height: 50px;
+  width: 300px;
+  max-width: 100%;
+}
+.custom:focus {
+  outline: none !important;
+  border: 1px solid #d9f7f7;
+  box-shadow: 0 0 10px #add8e6;
+  border-color: #add8e6;
+}

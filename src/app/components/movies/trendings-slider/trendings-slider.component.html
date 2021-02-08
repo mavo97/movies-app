@@ -1,0 +1,30 @@
+<div class="container slider-container">
+  <!-- You can now use your library component in app.component.html -->
+  <p>trendings-slider woxrks!</p>
+
+  <ngx-slick-carousel
+    class="carousel"
+    #slickModal="slick-carousel"
+    [config]="slideConfig"
+  >
+    <div ngxSlickItem *ngFor="let slide of slides" class="slide">
+      <img
+        class="rounded img-fluid img-size"
+        src="{{ slide.img }}"
+        alt=""
+        width="100%"
+      />
+      <div class="top-left">
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <span class="badge badge-blue">TMDB</span>
+            <span class="badge badge-light">8</span>
+          </li>
+          <li class="list-inline-item">
+            <span class="badge badge-danger text-white">Nuevo</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ngx-slick-carousel>
+</div>

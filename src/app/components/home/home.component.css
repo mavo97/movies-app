@@ -1,0 +1,10 @@
+/* Slider container */
+.slider-main {
+  color: white;
+  background-color: #29363d;
+  width: 100vw;
+  position: relative;
+  margin-left: -50vw;
+  height: 100%;
+  left: 50%;
+}
