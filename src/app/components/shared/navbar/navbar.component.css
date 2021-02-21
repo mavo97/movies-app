@@ -1,13 +1,25 @@
-.custom {
-  border-radius: 25px;
-  background: #d9f7f7;
-  height: 50px;
-  width: 300px;
-  max-width: 100%;
+.form-search {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 30px;
+  height: 40px;
+  padding: 0.75rem;
 }
-.custom:focus {
-  outline: none !important;
-  border: 1px solid #d9f7f7;
-  box-shadow: 0 0 10px #add8e6;
-  border-color: #add8e6;
+.bg-secondary {
+  background-color: #e1e8ed !important;
+}
+.custom {
+  border: none;
+
+  background-color: #e1e8ed !important;
+}
+.form-control,
+.form-control:active,
+.form-control:focus,
+.form-control:hover {
+  box-shadow: none;
 }

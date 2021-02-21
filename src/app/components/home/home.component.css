@@ -1,7 +1,8 @@
 /* Slider container */
 .slider-main {
   color: white;
-  background-color: #29363d;
+  /* background-color: #29363d; */
+  background-color: #032541;
   width: 100vw;
   position: relative;
   margin-left: -50vw;

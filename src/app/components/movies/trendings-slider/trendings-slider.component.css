@@ -2,12 +2,14 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
+img {
+  border-radius: 1rem !important;
+}
 .img-size {
-  height: 275px;
+  height: auto;
+  width: 180px;
   border-style: none;
   padding-left: 10px;
-  padding-right: 10px;
 }
 
 .slide:hover .img-size {
@@ -22,11 +24,21 @@
   top: 2%;
   left: 10%;
   z-index: 1; */
-  top: 2%;
+  top: 0;
   position: absolute;
   left: 0;
-  padding: 0.25rem;
+  padding: 0.15rem;
   z-index: 1;
+}
+.badge-group::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 9px 9px 0;
+  border-color: transparent #1db9d8 transparent transparent;
+  position: absolute;
+  top: 20px;
 }
 .badge {
   color: #151b1e;
@@ -41,6 +53,7 @@
 }
 .badge-light {
   background-color: white;
+  border-color: black;
 }
 .badge-blue {
   background-color: #1db9d8;
@@ -49,32 +62,40 @@
   background-color: #e44258;
   border-color: black;
 }
+
+.slide:focus {
+  outline: none !important;
+}
 @media (max-width: 1024px) {
   .img-size {
-    height: 100%;
+    height: auto;
+    width: 160px;
     padding-left: 10px;
-    padding-right: 10px;
   }
 }
 @media (max-width: 600px) {
   .img-size {
-    height: 200px;
-    padding-left: 5px;
-    padding-right: 5px;
+    height: auto;
+    width: 160px;
+    padding-left: 10px;
   }
 }
 @media (max-width: 480px) {
   .img-size {
-    height: 200px;
-    padding-left: 5px;
-    padding-right: 5px;
+    height: auto;
+    width: 160px;
+    padding-left: 10px;
   }
 }
 @media (max-width: 540px) {
   .img-size {
     height: auto;
-    padding-left: 5px;
-    padding-right: 5px;
-    width: 100%;
+    width: 160px;
+    padding-left: 10px;
+  }
+}
+@media (max-width: 280px) {
+  .list-inline-item {
+    margin-right: 2px !important;
   }
 }

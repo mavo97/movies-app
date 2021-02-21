@@ -27,8 +27,8 @@ export class TrendingsSliderComponent implements OnInit {
         breakpoint: 1024,
         settings: {
           arrows: false,
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 4,
+          slidesToScroll: 4,
           infinite: true,
           dots: true,
         },
