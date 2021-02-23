@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   }
 
   getMoviesList($event?: any) {
-    console.log($event);
+    // console.log($event);
 
     if ($event) {
       this.getMovies($event.pageIndex);
@@ -30,6 +30,9 @@ export class HomeComponent implements OnInit {
   }
 
   getMovies(index?: number) {
+    // console.log(index);
+    this.goToTop();
+
     this.moviesService
       .getMoviesList(index ? index + 1 : 1, 'primary_release_date.desc')
       .pipe(take(1))
@@ -38,5 +41,11 @@ export class HomeComponent implements OnInit {
         this.pageSize = data.total_pages;
         this.moviesLength = data.total_results;
       });
+  }
+
+  goToTop() {
+    console.log('gototop');
+
+    window.scroll(0, 0);
   }
 }
