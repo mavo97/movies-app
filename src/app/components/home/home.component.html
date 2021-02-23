@@ -5,5 +5,17 @@
       <br />
     </div>
   </div>
-  <p>home works!</p>
+  <div class="main-content">
+    <div class="row row-cols-2 row-cols-md-6">
+      <div class="col mb-2" *ngFor="let movie of listMovies">
+        <div class="card border-0 h-100">
+          <app-movie-poster
+            [imgSrc]="movie | imageSrc"
+            [vote_average]="movie.vote_average"
+          >
+          </app-movie-poster>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

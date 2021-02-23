@@ -9,3 +9,9 @@
   height: 100%;
   left: 50%;
 }
+
+.main-content {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 100%;
+}

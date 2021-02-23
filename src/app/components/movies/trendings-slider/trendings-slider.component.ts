@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MoviesServiceService } from '../../../providers/movies-service.service';
+import { MovieResponse } from '../../../models/movie-reponse.interface';
+import { Movie } from '../../../models/movie.interface';
 
 @Component({
   selector: 'app-trendings-slider',
@@ -6,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./trendings-slider.component.css'],
 })
 export class TrendingsSliderComponent implements OnInit {
-  constructor() {}
+  trendingMovies: Movie[] = [];
 
-  ngOnInit(): void {}
+  constructor(private moviesService: MoviesServiceService) {}
+
+  ngOnInit(): void {
+    this.getTrendings();
+  }
   slides = [
     { img: 'https://image.tmdb.org/t/p/w185/cDsCLYvJI8kYqJ6tdNhhYYC2DJC.jpg' },
     { img: 'https://image.tmdb.org/t/p/w185/6wjoI3LO0WZHDQdfGlq4de0FHEj.jpg' },
@@ -56,4 +63,10 @@ export class TrendingsSliderComponent implements OnInit {
       },
     ],
   };
+
+  getTrendings() {
+    this.moviesService.trendingMovies().subscribe((data: MovieResponse) => {
+      this.trendingMovies = data.results;
+    });
+  }
 }

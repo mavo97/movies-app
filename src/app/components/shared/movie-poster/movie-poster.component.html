@@ -1,0 +1,17 @@
+<img
+  class="rounded img-fluid img-size"
+  src="{{ imgSrc }}"
+  alt=""
+  width="100%"
+/>
+<div class="top-left">
+  <ul class="list-inline">
+    <li class="list-inline-item badge-group">
+      <span class="badge badge-blue">TMDB</span>
+      <span class="badge badge-light">{{
+        vote_average | number: "1.1-1"
+      }}</span>
+    </li>
+    <li class="list-inline-item badge badge-danger text-white">Nuevo</li>
+  </ul>
+</div>

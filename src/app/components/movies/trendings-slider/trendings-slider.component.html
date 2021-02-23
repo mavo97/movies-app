@@ -6,22 +6,11 @@
     #slickModal="slick-carousel"
     [config]="slideConfig"
   >
-    <div ngxSlickItem *ngFor="let slide of slides" class="slide mt-3">
-      <img
-        class="rounded img-fluid img-size"
-        src="{{ slide.img }}"
-        alt=""
-        width="100%"
-      />
-      <div class="top-left">
-        <ul class="list-inline">
-          <li class="list-inline-item badge-group">
-            <span class="badge badge-blue">TMDB</span>
-            <span class="badge badge-light">8</span>
-          </li>
-          <li class="list-inline-item badge badge-danger text-white">Nuevo</li>
-        </ul>
-      </div>
+    <div ngxSlickItem *ngFor="let movie of trendingMovies" class="slide mt-3">
+      <app-movie-poster
+        [imgSrc]="movie | imageSrc"
+        [vote_average]="movie.vote_average"
+      ></app-movie-poster>
     </div>
   </ngx-slick-carousel>
 </div>

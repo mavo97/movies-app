@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 // Angular material
 import { MatMenuModule } from '@angular/material/menu';
@@ -18,6 +19,8 @@ import { TrendingsSliderComponent } from './components/movies/trendings-slider/t
 
 // Libraries
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { MoviePosterComponent } from './components/shared/movie-poster/movie-poster.component';
+import { ImageSrcPipe } from './pipes/image-src.pipe';
 
 @NgModule({
   declarations: [
@@ -25,11 +28,14 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     NavbarComponent,
     HomeComponent,
     TrendingsSliderComponent,
+    MoviePosterComponent,
+    ImageSrcPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatMenuModule,
     MatButtonModule,
     MatInputModule,
