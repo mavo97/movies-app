@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 // Components
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -21,6 +22,11 @@ import { TrendingsSliderComponent } from './components/movies/trendings-slider/t
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { MoviePosterComponent } from './components/shared/movie-poster/movie-poster.component';
 import { ImageSrcPipe } from './pipes/image-src.pipe';
+
+// Traduccion al español
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs);
 
 @NgModule({
   declarations: [
@@ -40,9 +46,10 @@ import { ImageSrcPipe } from './pipes/image-src.pipe';
     MatButtonModule,
     MatInputModule,
     MatIconModule,
+    MatPaginatorModule,
     SlickCarouselModule,
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

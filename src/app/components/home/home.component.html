@@ -7,15 +7,28 @@
   </div>
   <div class="main-content">
     <div class="row row-cols-2 row-cols-md-6">
-      <div class="col mb-2" *ngFor="let movie of listMovies">
+      <div class="col" *ngFor="let movie of listMovies">
         <div class="card border-0 h-100">
           <app-movie-poster
             [imgSrc]="movie | imageSrc"
             [vote_average]="movie.vote_average"
           >
           </app-movie-poster>
+          <div class="card-body">
+            <h5 class="card-title fs-6 lh-sms">{{ movie.title }}</h5>
+            <p class="card-text">
+              {{ movie.release_date | date: "MMMM d, yyyy" | titlecase }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
+    <mat-paginator
+      [length]="moviesLength"
+      [pageSize]="listMovies.length"
+      [pageSizeOptions]="[20]"
+      (page)="getMoviesList($event)"
+    >
+    </mat-paginator>
   </div>
 </div>

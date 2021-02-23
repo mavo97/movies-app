@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MoviesServiceService } from '../../providers/movies-service.service';
 import { MovieResponse } from '../../models/movie-reponse.interface';
 import { Movie } from '../../models/movie.interface';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -9,30 +10,33 @@ import { Movie } from '../../models/movie.interface';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  slides = [
-    { img: 'https://image.tmdb.org/t/p/w185/cDsCLYvJI8kYqJ6tdNhhYYC2DJC.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/6wjoI3LO0WZHDQdfGlq4de0FHEj.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/vOefWMYqC1S3aiCTD5MD8HeXl0Y.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/xSDdRAjxKAGi8fUBLOqSrBhJmF0.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/zz9Fa9gDEasVXRgHw3rvFb8Rtpa.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/dcneAm8XdqBvkJWRZ0ht6YQUauF.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/gI9oVLHXgPYidW2W4A7p1pYW9QB.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/t5wmHLkHZxoFoAZxhLeP7ewBXe3.jpg' },
-  ];
   listMovies: Movie[] = [];
-
+  pageSize: number;
+  moviesLength: number;
   constructor(private moviesService: MoviesServiceService) {}
 
   ngOnInit(): void {
     this.getMoviesList();
   }
 
-  getMoviesList() {
+  getMoviesList($event?: any) {
+    console.log($event);
+
+    if ($event) {
+      this.getMovies($event.pageIndex);
+    } else {
+      this.getMovies();
+    }
+  }
+
+  getMovies(index?: number) {
     this.moviesService
-      .getMoviesList(1, 'primary_release_date.desc')
+      .getMoviesList(index ? index + 1 : 1, 'primary_release_date.desc')
+      .pipe(take(1))
       .subscribe((data: MovieResponse) => {
         this.listMovies = data.results;
-        console.log(this.listMovies);
+        this.pageSize = data.total_pages;
+        this.moviesLength = data.total_results;
       });
   }
 }
