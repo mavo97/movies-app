@@ -37,11 +37,11 @@ export class HomeComponent implements OnInit {
       .getMoviesList(index, 'primary_release_date.desc')
       .pipe(take(1))
       .subscribe((data: MovieResponse) => {
-        console.log(index);
+        // console.log(index);
         this.listMovies = data.results;
         this.pageSize = data.total_pages;
         this.moviesLength = data.total_results;
-        console.log(data);
+        // console.log(data);
       });
   }
 
