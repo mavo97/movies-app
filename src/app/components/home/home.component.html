@@ -25,9 +25,11 @@
     </div>
     <mat-paginator
       [length]="moviesLength"
+      [hidePageSize]="true"
       [pageSize]="listMovies.length"
-      [pageSizeOptions]="[20]"
+      (getNumberOfPages)="(pageSize)"
       (page)="getMoviesList($event)"
+      [showFirstLastButtons]="true"
     >
     </mat-paginator>
   </div>

@@ -21,9 +21,9 @@ export class HomeComponent implements OnInit {
 
   getMoviesList($event?: any) {
     // console.log($event);
-
+    const index = 1;
     if ($event) {
-      this.getMovies($event.pageIndex);
+      this.getMovies($event.pageIndex > 0 ? index + $event.pageIndex : 1);
     } else {
       this.getMovies();
     }
@@ -34,12 +34,14 @@ export class HomeComponent implements OnInit {
     this.goToTop();
 
     this.moviesService
-      .getMoviesList(index ? index + 1 : 1, 'primary_release_date.desc')
+      .getMoviesList(index, 'primary_release_date.desc')
       .pipe(take(1))
       .subscribe((data: MovieResponse) => {
+        console.log(index);
         this.listMovies = data.results;
         this.pageSize = data.total_pages;
         this.moviesLength = data.total_results;
+        console.log(data);
       });
   }
 
