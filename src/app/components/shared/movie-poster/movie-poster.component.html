@@ -6,7 +6,7 @@
 />
 <div class="top-left">
   <ul class="list-inline">
-    <li class="list-inline-item badge-group">
+    <li class="list-inline-item badge-group mb-1">
       <span class="badge badge-blue">TMDB</span>
       <span class="badge badge-light">{{
         vote_average | number: "1.1-1"
@@ -14,9 +14,21 @@
     </li>
     <li
       class="list-inline-item badge badge-danger text-white"
-      *ngIf="time < movieTime"
+      *ngIf="id && time < movieTime && inStock(movies, id)"
     >
       Nuevo
+    </li>
+    <li
+      class="list-inline-item badge badge-danger text-white"
+      *ngIf="!id && time < movieTime"
+    >
+      Nuevo
+    </li>
+    <li
+      class="list-inline-item badge bg-warning text-dark"
+      *ngIf="id && !inStock(movies, id)"
+    >
+      Próximamente
     </li>
   </ul>
 </div>

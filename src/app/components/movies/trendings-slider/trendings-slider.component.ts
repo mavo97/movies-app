@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MoviesServiceService } from '../../../providers/movies-service.service';
 import { MovieResponse } from '../../../models/movie-reponse.interface';
 import { Movie } from '../../../models/movie.interface';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-trendings-slider',
@@ -10,11 +11,11 @@ import { Movie } from '../../../models/movie.interface';
 })
 export class TrendingsSliderComponent implements OnInit {
   trendingMovies: Movie[] = [];
-
+  newMovies: Movie[] = [];
   constructor(private moviesService: MoviesServiceService) {}
 
   ngOnInit(): void {
-    this.getTrendings();
+    this.getMovies();
   }
 
   slideConfig = {
@@ -66,6 +67,16 @@ export class TrendingsSliderComponent implements OnInit {
           new Date(a.release_date).getTime()
         );
       });
+      console.log(this.trendingMovies);
     });
+  }
+
+  async getMovies() {
+    const movieResponse = await this.moviesService
+      .getMoviesList(1, 'primary_release_date.desc')
+      .pipe(take(1))
+      .toPromise();
+    this.newMovies = movieResponse.results;
+    this.getTrendings();
   }
 }
