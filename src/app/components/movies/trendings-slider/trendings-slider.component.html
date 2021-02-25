@@ -6,7 +6,11 @@
     #slickModal="slick-carousel"
     [config]="slideConfig"
   >
-    <div ngxSlickItem *ngFor="let movie of trendingMovies" class="slide mt-3">
+    <div
+      ngxSlickItem
+      *ngFor="let movie of trendingMovies | slice: 0:12"
+      class="slide mt-3"
+    >
       <app-movie-poster
         [imgSrc]="movie | imageSrc"
         [vote_average]="movie.vote_average"

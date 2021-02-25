@@ -16,16 +16,7 @@ export class TrendingsSliderComponent implements OnInit {
   ngOnInit(): void {
     this.getTrendings();
   }
-  slides = [
-    { img: 'https://image.tmdb.org/t/p/w185/cDsCLYvJI8kYqJ6tdNhhYYC2DJC.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/6wjoI3LO0WZHDQdfGlq4de0FHEj.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/vOefWMYqC1S3aiCTD5MD8HeXl0Y.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/xSDdRAjxKAGi8fUBLOqSrBhJmF0.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/zz9Fa9gDEasVXRgHw3rvFb8Rtpa.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/dcneAm8XdqBvkJWRZ0ht6YQUauF.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/gI9oVLHXgPYidW2W4A7p1pYW9QB.jpg' },
-    { img: 'https://image.tmdb.org/t/p/w185/t5wmHLkHZxoFoAZxhLeP7ewBXe3.jpg' },
-  ];
+
   slideConfig = {
     slidesToShow: 6,
     slidesToScroll: 6,
@@ -66,7 +57,15 @@ export class TrendingsSliderComponent implements OnInit {
 
   getTrendings() {
     this.moviesService.trendingMovies().subscribe((data: MovieResponse) => {
-      this.trendingMovies = data.results;
+      // this.trendingMovies = data.results;
+      this.trendingMovies = data.results.sort(function (a, b) {
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return (
+          new Date(b.release_date).getTime() -
+          new Date(a.release_date).getTime()
+        );
+      });
     });
   }
 }
