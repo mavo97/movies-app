@@ -46,8 +46,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToTop() {
-    console.log('gototop');
-
+    // console.log('gototop');
     window.scroll(0, 0);
   }
 }
