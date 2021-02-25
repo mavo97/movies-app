@@ -13,36 +13,49 @@ export class HomeComponent implements OnInit {
   listMovies: Movie[] = [];
   pageSize: number;
   moviesLength: number;
+  moviesToDisplay: Movie[] = [];
   constructor(private moviesService: MoviesServiceService) {}
 
-  ngOnInit(): void {
-    this.getMoviesList();
+  async ngOnInit(): Promise<void> {
+    await this.getMovies();
+    // console.log(this.pageSize);
+    // console.log(this.listMovies);
   }
 
-  getMoviesList($event?: any) {
-    // console.log($event);
-    const index = 1;
-    if ($event) {
-      this.getMovies($event.pageIndex > 0 ? index + $event.pageIndex : 1);
-    } else {
-      this.getMovies();
+  async getMovies() {
+    this.pageSize = await (
+      await this.moviesService
+        .getMoviesList(1, 'primary_release_date.desc')
+        .pipe(take(1))
+        .toPromise()
+    ).total_pages;
+
+    for (let i = 1; i <= this.pageSize; i++) {
+      const movies = await (
+        await this.moviesService
+          .getMoviesList(i, 'primary_release_date.desc')
+          .pipe(take(1))
+          .toPromise()
+      ).results;
+      this.sliceListMovies(false);
+      movies.forEach((movie) => this.listMovies.push(movie));
     }
+    this.moviesLength = this.listMovies.length;
   }
 
-  getMovies(index?: number) {
+  sliceListMovies(scroll?: boolean, index?: number) {
     // console.log(index);
-    this.goToTop();
-
-    this.moviesService
-      .getMoviesList(index, 'primary_release_date.desc')
-      .pipe(take(1))
-      .subscribe((data: MovieResponse) => {
-        // console.log(index);
-        this.listMovies = data.results;
-        this.pageSize = data.total_pages;
-        this.moviesLength = data.total_results;
-        // console.log(data);
-      });
+    if (index) {
+      this.moviesToDisplay = this.listMovies.slice(
+        index * 20,
+        (index + 1) * 20
+      );
+    } else {
+      this.moviesToDisplay = this.listMovies.slice(0, 20);
+    }
+    if (scroll) {
+      this.goToTop();
+    }
   }
 
   goToTop() {

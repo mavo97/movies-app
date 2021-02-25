@@ -7,7 +7,7 @@
   </div>
   <div class="main-content" id="main-container">
     <div class="row row-cols-2 row-cols-md-6">
-      <div class="col" *ngFor="let movie of listMovies">
+      <div class="col" *ngFor="let movie of moviesToDisplay">
         <div class="card border-0 h-100">
           <app-movie-poster
             [imgSrc]="movie | imageSrc"
@@ -28,8 +28,8 @@
       [length]="moviesLength"
       [hidePageSize]="true"
       [pageSize]="20"
-      (getNumberOfPages)="(pageSize)"
-      (page)="getMoviesList($event)"
+      (getNumberOfPages)="(pageSize - 1)"
+      (page)="sliceListMovies(true, $event.pageIndex)"
       [showFirstLastButtons]="true"
     >
     </mat-paginator>

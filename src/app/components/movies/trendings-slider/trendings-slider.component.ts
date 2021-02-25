@@ -16,6 +16,7 @@ export class TrendingsSliderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMovies();
+    this.moviesService.getGenres().subscribe((data) => console.log(data));
   }
 
   slideConfig = {
@@ -67,7 +68,7 @@ export class TrendingsSliderComponent implements OnInit {
           new Date(a.release_date).getTime()
         );
       });
-      console.log(this.trendingMovies);
+      // console.log(this.trendingMovies);
     });
   }
 

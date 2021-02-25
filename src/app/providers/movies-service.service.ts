@@ -29,4 +29,10 @@ export class MoviesServiceService {
       `${this.url}/list/${this.listId}?page=${page}&api_key=${this.apiKey}&language=es-MX&sort_by=${order}`
     );
   }
+
+  getGenres() {
+    return this.http.get<any>(
+      `${this.url2}/genre/movie/list?api_key=${this.apiKey}&language=es-MX`
+    );
+  }
 }
