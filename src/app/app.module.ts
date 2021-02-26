@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 
 // Components
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -47,6 +48,7 @@ registerLocaleData(localeEs);
     MatInputModule,
     MatIconModule,
     MatPaginatorModule,
+    MatSelectModule,
     SlickCarouselModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],
