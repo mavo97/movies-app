@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MovieResponse } from '../models/movie-reponse.interface';
 import { Observable } from 'rxjs';
 import { Movie } from '../models/movie.interface';
+import { VideoMovie } from '../models/movie-video.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,12 @@ export class MoviesServiceService {
   getMovie(id: number): Observable<Movie> {
     return this.http.get<Movie>(
       `${this.url2}/movie/${id}?api_key=${this.apiKey}&language=es-MX`
+    );
+  }
+
+  getVideoId(movieId: number): Observable<VideoMovie> {
+    return this.http.get<VideoMovie>(
+      `${this.url2}/movie/${movieId}/videos?api_key=${this.apiKey}`
     );
   }
 }

@@ -21,7 +21,10 @@
             class="img-fluid rounded"
           />
         </figcaption>
-        <button class="btn btn-primary rounded-pill btn-block mt-2">
+        <button
+          class="btn btn-primary rounded-pill btn-block mt-2"
+          (click)="openDialog()"
+        >
           <i class="fab fa-youtube"></i> Ver trailer
         </button>
       </figure>
@@ -49,8 +52,8 @@
               <mat-progress-spinner
                 *ngIf="value"
                 class="example-margin"
-                [color]="color"
-                [mode]="mode"
+                color="warn"
+                mode="determinate"
                 [value]="value"
                 [diameter]="45"
               >

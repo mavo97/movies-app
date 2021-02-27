@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Components
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -31,6 +32,8 @@ import { ImageSrcPipe } from './pipes/image-src.pipe';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { MovieOverviewComponent } from './components/movies/movie-overview/movie-overview.component';
+import { DialogVideoComponent } from './components/shared/dialog-video/dialog-video.component';
+import { VideoYoutubePipe } from './pipes/video-youtube.pipe';
 registerLocaleData(localeEs);
 
 @NgModule({
@@ -42,6 +45,8 @@ registerLocaleData(localeEs);
     MoviePosterComponent,
     ImageSrcPipe,
     MovieOverviewComponent,
+    DialogVideoComponent,
+    VideoYoutubePipe,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +62,7 @@ registerLocaleData(localeEs);
     MatProgressBarModule,
     MatDividerModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     SlickCarouselModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],

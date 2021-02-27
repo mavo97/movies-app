@@ -3,8 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { MoviesServiceService } from '../../../providers/movies-service.service';
 import { Movie } from '../../../models/movie.interface';
-import { ThemePalette } from '@angular/material/core';
-import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogVideoComponent } from '../../shared/dialog-video/dialog-video.component';
+import { Trailer } from '../../../models/movie-video.interface';
+
 @Component({
   selector: 'app-movie-overview',
   templateUrl: './movie-overview.component.html',
@@ -13,12 +15,13 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 export class MovieOverviewComponent implements OnInit {
   movieId: number;
   movie: Movie;
-  color: ThemePalette = 'warn';
-  mode: ProgressSpinnerMode = 'determinate';
   value: number;
+  video: Trailer;
+
   constructor(
     private routeActivated: ActivatedRoute,
-    private movieService: MoviesServiceService
+    private movieService: MoviesServiceService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +41,17 @@ export class MovieOverviewComponent implements OnInit {
       .pipe(take(1))
       .toPromise();
     this.value = Math.round(this.movie.vote_average * 10);
-    console.log(this.movie);
+    this.video = (
+      await this.movieService.getVideoId(this.movieId).pipe(take(1)).toPromise()
+    ).results[0];
+  }
+
+  openDialog() {
+    this.dialog.open(DialogVideoComponent, {
+      data: {
+        videoKey: this.video.key,
+        videoName: this.video.name,
+      },
+    });
   }
 }

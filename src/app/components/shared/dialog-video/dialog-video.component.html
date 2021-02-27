@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>{{ data.videoName }}</h1>
+<div mat-dialog-content>
+  <div class="container">
+    <div
+      class="embed-responsive embed-responsive-16by9 rounded d-flex justify-content-center"
+      *ngIf="data.videoKey"
+    >
+      <iframe
+        id="player"
+        type="text/html"
+        class="embed-responsive-item"
+        scrolling="no"
+        allow="accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture"
+        [src]="data.videoKey | videoYoutube"
+        frameborder="0"
+        allowfullscreen
+        webkitallowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cerrar</button>
+</div>
