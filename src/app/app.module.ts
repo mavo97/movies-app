@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // Components
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -53,6 +55,8 @@ registerLocaleData(localeEs);
     MatPaginatorModule,
     MatSelectModule,
     MatProgressBarModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
     SlickCarouselModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],

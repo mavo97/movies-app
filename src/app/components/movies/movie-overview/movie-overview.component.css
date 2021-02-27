@@ -1,0 +1,22 @@
+.border-top {
+  border-top: 1px solid #e1e8ed !important;
+}
+.btn-block {
+  display: block;
+  width: 100%;
+}
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+.font-weight-bold {
+  font-weight: 500 !important;
+}
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.example-margin {
+  margin: 0 0px;
+}

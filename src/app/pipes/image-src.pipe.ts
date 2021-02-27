@@ -11,13 +11,15 @@ export class ImageSrcPipe implements PipeTransform {
     //   return img_base_url + pelicula.backdrop_path;
     // }
 
-    if (pelicula.poster_path) {
-      return img_base_url + pelicula.poster_path;
-    } else {
-      if (pelicula.backdrop_path) {
-        return img_base_url + pelicula.backdrop_path;
+    if (pelicula) {
+      if (pelicula.poster_path) {
+        return img_base_url + pelicula.poster_path;
       } else {
-        return 'assets/no-image.png';
+        if (pelicula.backdrop_path) {
+          return img_base_url + pelicula.backdrop_path;
+        } else {
+          return 'assets/no-image.png';
+        }
       }
     }
   }

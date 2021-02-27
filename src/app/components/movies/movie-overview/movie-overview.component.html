@@ -1,1 +1,82 @@
-<p>movie-overview works!</p>
+<mat-divider></mat-divider>
+
+<div class="container">
+  <div class="row">
+    <nav class="col-12">
+      <ol class="breadcrumb mt-2">
+        <li class="breadcrumb-item lh-sm">
+          <a [routerLink]="['/']">Inicio</a>
+        </li>
+        <li class="breadcrumb-item lh-sm active">Películas</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-3 py-3 border-top">
+      <figure>
+        <figcaption class="d-flex justify-content-center">
+          <img
+            [src]="movie | imageSrc"
+            alt="I Care A Lot"
+            class="img-fluid rounded"
+          />
+        </figcaption>
+        <button class="btn btn-primary rounded-pill btn-block mt-2">
+          <i class="fab fa-youtube"></i> Ver trailer
+        </button>
+      </figure>
+    </div>
+    <div class="col-12 col-sm-9 py-3 border-top">
+      <div class="row" *ngIf="movie">
+        <div class="col-12">
+          <ul class="list-unstyled">
+            <li>
+              <h1 class="font-weight-bold text-truncate text-dark fs-3 text">
+                {{ movie.title }}
+              </h1>
+            </li>
+            <li class="badge bg-primary mb-1">
+              {{ movie.release_date | slice: 0:4 }}
+            </li>
+            <li class="mb-2">
+              <ul class="list-inline">
+                <li class="list-inline-item" *ngFor="let genre of movie.genres">
+                  {{ genre.name }}
+                </li>
+              </ul>
+            </li>
+            <li>
+              <mat-progress-spinner
+                *ngIf="value"
+                class="example-margin"
+                [color]="color"
+                [mode]="mode"
+                [value]="value"
+                [diameter]="45"
+              >
+              </mat-progress-spinner>
+              <div
+                style="position: relative; top: -32px; left: 10px"
+                class="lh-sm d-flex align-content-center"
+              >
+                {{ value }}%
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12">
+          <p class="text-dark text-sm-start">{{ movie.overview }}</p>
+        </div>
+        <div class="col-sm-2 fw-bolder">Página oficial</div>
+        <div class="col-sm-10">
+          <a [href]="movie.homepage" target="_blank">{{ movie.homepage }}</a>
+        </div>
+        <div class="col-sm-2 fw-bolder" *ngIf="movie.tagline">Lema</div>
+        <div class="col-sm-10" *ngIf="movie.tagline">
+          {{ movie.tagline }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+</div>
