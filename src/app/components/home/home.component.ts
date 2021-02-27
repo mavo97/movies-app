@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   genre: boolean;
   index: number;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  loading: boolean;
   constructor(private moviesService: MoviesServiceService) {}
 
   async ngOnInit(): Promise<void> {
@@ -33,6 +34,7 @@ export class HomeComponent implements OnInit {
   }
 
   async getMovies() {
+    this.loading = true;
     await this.getGenres();
     this.totalPages = await (
       await this.moviesService
@@ -53,6 +55,7 @@ export class HomeComponent implements OnInit {
     }
     this.listMoviesCopy = this.listMovies;
     this.moviesLength = this.listMovies.length;
+    this.loading = false;
   }
 
   async getGenres() {
@@ -131,6 +134,7 @@ export class HomeComponent implements OnInit {
     this.listMovies = [];
     this.pageSize;
     this.moviesLength;
+    this.listMoviesCopy = [];
     this.getMovies();
   }
 }
