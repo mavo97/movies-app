@@ -11,7 +11,9 @@ export class MoviePosterComponent implements OnInit {
   @Input() imgSrc: string;
   @Input() release_date: string;
   @Input() movies: Movie[];
+  @Input() idCompare: number;
   @Input() id: number;
+
   time: number;
   movieTime: number;
   constructor() {}

@@ -28,6 +28,7 @@ import { ImageSrcPipe } from './pipes/image-src.pipe';
 // Traduccion al español
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { MovieOverviewComponent } from './components/movies/movie-overview/movie-overview.component';
 registerLocaleData(localeEs);
 
 @NgModule({
@@ -38,6 +39,7 @@ registerLocaleData(localeEs);
     TrendingsSliderComponent,
     MoviePosterComponent,
     ImageSrcPipe,
+    MovieOverviewComponent,
   ],
   imports: [
     BrowserModule,

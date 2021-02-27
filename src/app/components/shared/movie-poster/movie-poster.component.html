@@ -1,9 +1,11 @@
-<img
-  class="rounded img-fluid img-size"
-  src="{{ imgSrc }}"
-  alt=""
-  width="100%"
-/>
+<a [routerLink]="['/movie', id]"
+  ><img
+    class="rounded img-fluid img-size"
+    src="{{ imgSrc }}"
+    alt=""
+    width="100%"
+/></a>
+
 <div class="top-left">
   <ul class="list-inline">
     <li class="list-inline-item badge-group mb-1">
@@ -14,19 +16,19 @@
     </li>
     <li
       class="list-inline-item badge badge-danger text-white"
-      *ngIf="id && time < movieTime && inStock(movies, id)"
+      *ngIf="idCompare && time < movieTime && inStock(movies, idCompare)"
     >
       Nuevo
     </li>
     <li
       class="list-inline-item badge badge-danger text-white"
-      *ngIf="!id && time < movieTime"
+      *ngIf="!idCompare && time < movieTime"
     >
       Nuevo
     </li>
     <li
       class="list-inline-item badge bg-warning text-dark"
-      *ngIf="id && !inStock(movies, id)"
+      *ngIf="idCompare && !inStock(movies, idCompare)"
     >
       Próximamente
     </li>
