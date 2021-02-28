@@ -13,4 +13,5 @@ export interface Movie {
   video: boolean;
   homepage: string;
   tagline: string;
+  genre_ids?: number[];
 }
