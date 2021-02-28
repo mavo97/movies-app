@@ -17,7 +17,7 @@ export class MovieOverviewComponent implements OnInit {
   movie: Movie;
   value: number;
   video: Trailer;
-
+  loading: boolean;
   constructor(
     private routeActivated: ActivatedRoute,
     private movieService: MoviesServiceService,
@@ -34,6 +34,7 @@ export class MovieOverviewComponent implements OnInit {
   }
 
   async getMovieInfo() {
+    this.loading = true;
     await this.getMovieId().then((params) => (this.movieId = +params.id));
 
     this.movie = await this.movieService
@@ -44,6 +45,7 @@ export class MovieOverviewComponent implements OnInit {
     this.video = (
       await this.movieService.getVideoId(this.movieId).pipe(take(1)).toPromise()
     ).results[0];
+    this.loading = false;
   }
 
   openDialog() {
