@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MoviesServiceService } from '../../providers/movies-service.service';
-import { MovieResponse } from '../../models/movie-reponse.interface';
 import { Movie } from '../../models/movie.interface';
 import { take } from 'rxjs/operators';
 import { Genre } from '../../models/genre.interface';
 import { GenreResponse } from '../../models/genre-response.interface';
 import { MatPaginator } from '@angular/material/paginator';
+import { LocalStorageService } from '../../providers/local-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -25,10 +25,13 @@ export class HomeComponent implements OnInit {
   index: number;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   loading: boolean;
-  constructor(private moviesService: MoviesServiceService) {}
+  constructor(
+    private moviesService: MoviesServiceService,
+    private lsService: LocalStorageService
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.getMovies();
+    await this.moviesStorage();
     // console.log(this.pageSize);
     // console.log(this.listMovies);
   }
@@ -56,6 +59,8 @@ export class HomeComponent implements OnInit {
     this.listMoviesCopy = this.listMovies;
     this.moviesLength = this.listMovies.length;
     this.loading = false;
+    this.lsService.setItem('movies', JSON.stringify(this.listMovies));
+    this.lsService.setItem('total_pages', JSON.stringify(this.totalPages));
   }
 
   async getGenres() {
@@ -63,7 +68,9 @@ export class HomeComponent implements OnInit {
       .getGenres()
       .pipe(take(1))
       .toPromise();
-    this.genreResponse.genres.forEach((genre) => this.genres.push(genre));
+    await this.genreResponse.genres.forEach((genre) => this.genres.push(genre));
+    await this.lsService.setItem('genres', JSON.stringify(this.genres));
+
     // console.log(this.genres);
   }
 
@@ -84,7 +91,8 @@ export class HomeComponent implements OnInit {
       this.sliceListMovies2(false);
       this.paginator.pageIndex = 0;
     } else {
-      this.reset();
+      this.moviesStorage();
+      this.paginator.pageIndex = 0;
     }
   }
 
@@ -136,5 +144,22 @@ export class HomeComponent implements OnInit {
     this.moviesLength;
     this.listMoviesCopy = [];
     this.getMovies();
+  }
+
+  async moviesStorage() {
+    let movies: Movie[] = JSON.parse(this.lsService.getItem('movies'));
+    const total_pages: number = parseInt(
+      JSON.parse(this.lsService.getItem('total_pages'))
+    );
+    if (movies !== null && total_pages !== null) {
+      this.genres = JSON.parse(localStorage.getItem('genres'));
+      this.listMovies = movies;
+      this.listMoviesCopy = this.listMovies;
+      this.moviesLength = this.listMovies.length;
+      this.totalPages = total_pages;
+      this.sliceListMovies(false, 0);
+    } else {
+      await this.getMovies();
+    }
   }
 }

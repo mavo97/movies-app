@@ -5,6 +5,9 @@
 .slide:focus {
   outline: none !important;
 }
+.slide:active {
+  outline: none !important;
+}
 .slide {
   position: relative !important;
 }
