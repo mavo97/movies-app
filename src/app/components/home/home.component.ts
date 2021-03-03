@@ -32,8 +32,8 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.getGenres();
-
     await this.moviesStorage();
+
     // console.log(this.pageSize);
     // console.log(this.listMovies);
   }
@@ -62,6 +62,7 @@ export class HomeComponent implements OnInit {
     this.loading = false;
     this.lsService.setItem('movies', JSON.stringify(this.listMovies));
     this.lsService.setItem('total_pages', JSON.stringify(this.totalPages));
+    this.setExpiryStorage();
   }
 
   async getGenres() {
@@ -151,14 +152,23 @@ export class HomeComponent implements OnInit {
     const total_pages: number = parseInt(
       JSON.parse(this.lsService.getItem('total_pages'))
     );
-    if (movies !== null && total_pages !== null) {
-      this.listMovies = movies;
-      this.listMoviesCopy = this.listMovies;
-      this.moviesLength = this.listMovies.length;
-      this.totalPages = total_pages;
-      this.sliceListMovies(false, 0);
+    if (!this.lsService.compareTime()) {
+      if (movies !== null && total_pages !== null) {
+        this.listMovies = movies;
+        this.listMoviesCopy = this.listMovies;
+        this.moviesLength = this.listMovies.length;
+        this.totalPages = total_pages;
+        this.sliceListMovies(false, 0);
+      } else {
+        await this.getMovies();
+      }
     } else {
+      await localStorage.clear();
       await this.getMovies();
     }
+  }
+
+  setExpiryStorage() {
+    this.lsService.setExpiry();
   }
 }

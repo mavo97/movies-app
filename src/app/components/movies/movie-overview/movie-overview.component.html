@@ -54,7 +54,7 @@
                 </li>
               </ul>
             </li>
-            <li>
+            <li *ngIf="value > 0">
               <mat-progress-spinner
                 *ngIf="value"
                 class="example-margin"
