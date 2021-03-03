@@ -25,7 +25,10 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="row row-cols-2 row-cols-md-6">
+    <div
+      class="row row-cols-2 row-cols-md-6"
+      *ngIf="moviesToDisplay.length > 0"
+    >
       <div class="col" *ngFor="let movie of moviesToDisplay">
         <div class="card border-0 h-100">
           <app-movie-poster
@@ -44,25 +47,32 @@
         </div>
       </div>
     </div>
-    <mat-paginator
-      *ngIf="!genre"
-      [length]="moviesLength"
-      [hidePageSize]="true"
-      [pageSize]="20"
-      (getNumberOfPages)="(pageSize - 1)"
-      (page)="sliceListMovies(true, $event.pageIndex)"
-      [showFirstLastButtons]="true"
-    >
-    </mat-paginator>
-    <mat-paginator
-      *ngIf="genre"
-      [length]="moviesLength"
-      [hidePageSize]="true"
-      [pageSize]="20"
-      (getNumberOfPages)="(pageSize - 1)"
-      [pageIndex]="0"
-      (page)="sliceListMovies2(true, $event.pageIndex)"
-      [showFirstLastButtons]="true"
-    ></mat-paginator>
+    <div class="row" *ngIf="moviesToDisplay.length < 1">
+      <div class="col-sm-12">
+        <div class="alert alert-info" role="alert">
+          No se encontraron resultados!
+        </div>
+      </div>
+    </div>
   </div>
+  <mat-paginator
+    *ngIf="!genre"
+    [length]="moviesLength"
+    [hidePageSize]="true"
+    [pageSize]="20"
+    (getNumberOfPages)="(pageSize - 1)"
+    (page)="sliceListMovies(true, $event.pageIndex)"
+    [showFirstLastButtons]="true"
+  >
+  </mat-paginator>
+  <mat-paginator
+    *ngIf="genre"
+    [length]="moviesLength"
+    [hidePageSize]="true"
+    [pageSize]="20"
+    (getNumberOfPages)="(pageSize - 1)"
+    [pageIndex]="0"
+    (page)="sliceListMovies2(true, $event.pageIndex)"
+    [showFirstLastButtons]="true"
+  ></mat-paginator>
 </div>

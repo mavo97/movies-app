@@ -31,6 +31,8 @@ export class HomeComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    await this.getGenres();
+
     await this.moviesStorage();
     // console.log(this.pageSize);
     // console.log(this.listMovies);
@@ -38,7 +40,6 @@ export class HomeComponent implements OnInit {
 
   async getMovies() {
     this.loading = true;
-    await this.getGenres();
     this.totalPages = await (
       await this.moviesService
         .getMoviesList(1, 'primary_release_date.desc')
@@ -69,7 +70,6 @@ export class HomeComponent implements OnInit {
       .pipe(take(1))
       .toPromise();
     await this.genreResponse.genres.forEach((genre) => this.genres.push(genre));
-    await this.lsService.setItem('genres', JSON.stringify(this.genres));
 
     // console.log(this.genres);
   }
@@ -152,7 +152,6 @@ export class HomeComponent implements OnInit {
       JSON.parse(this.lsService.getItem('total_pages'))
     );
     if (movies !== null && total_pages !== null) {
-      this.genres = JSON.parse(localStorage.getItem('genres'));
       this.listMovies = movies;
       this.listMoviesCopy = this.listMovies;
       this.moviesLength = this.listMovies.length;
