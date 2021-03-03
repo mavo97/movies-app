@@ -76,13 +76,18 @@
         <div class="col-12">
           <p class="text-dark text-sm-start">{{ movie.overview }}</p>
         </div>
-        <div class="col-sm-2 fw-bolder">Página oficial</div>
-        <div class="col-sm-10">
-          <a [href]="movie.homepage" target="_blank">{{ movie.homepage }}</a>
+        <div *ngIf="movie.homepage">
+          <div class="col-sm-2 fw-bolder">Página oficial</div>
+          <div class="col-sm-10">
+            <a [href]="movie.homepage" target="_blank">{{ movie.homepage }}</a>
+          </div>
         </div>
-        <div class="col-sm-2 fw-bolder" *ngIf="movie.tagline">Lema</div>
-        <div class="col-sm-10" *ngIf="movie.tagline">
-          {{ movie.tagline }}
+
+        <div *ngIf="movie.tagline">
+          <div class="col-sm-2 fw-bolder">Lema</div>
+          <div class="col-sm-10">
+            <p class="font-italic">{{ movie.tagline }}</p>
+          </div>
         </div>
       </div>
     </div>
