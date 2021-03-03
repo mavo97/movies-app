@@ -22,18 +22,22 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { TrendingsSliderComponent } from './components/movies/trendings-slider/trendings-slider.component';
+import { MovieOverviewComponent } from './components/movies/movie-overview/movie-overview.component';
+import { DialogVideoComponent } from './components/shared/dialog-video/dialog-video.component';
+import { WhatsAppButtonComponent } from './components/shared/whats-app-button/whats-app-button.component';
 
 // Libraries
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { MoviePosterComponent } from './components/shared/movie-poster/movie-poster.component';
+
+//Pipes
+import { VideoYoutubePipe } from './pipes/video-youtube.pipe';
 import { ImageSrcPipe } from './pipes/image-src.pipe';
 
 // Traduccion al español
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
-import { MovieOverviewComponent } from './components/movies/movie-overview/movie-overview.component';
-import { DialogVideoComponent } from './components/shared/dialog-video/dialog-video.component';
-import { VideoYoutubePipe } from './pipes/video-youtube.pipe';
+
 registerLocaleData(localeEs);
 
 @NgModule({
@@ -47,6 +51,7 @@ registerLocaleData(localeEs);
     MovieOverviewComponent,
     DialogVideoComponent,
     VideoYoutubePipe,
+    WhatsAppButtonComponent,
   ],
   imports: [
     BrowserModule,
