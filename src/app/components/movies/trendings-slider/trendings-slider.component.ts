@@ -12,6 +12,7 @@ import { take } from 'rxjs/operators';
 export class TrendingsSliderComponent implements OnInit {
   trendingMovies: Movie[] = [];
   newMovies: Movie[] = [];
+  loading: boolean;
   constructor(private moviesService: MoviesServiceService) {}
 
   ngOnInit(): void {
@@ -67,11 +68,13 @@ export class TrendingsSliderComponent implements OnInit {
           new Date(a.release_date).getTime()
         );
       });
+      this.loading = false;
       // console.log(this.trendingMovies);
     });
   }
 
   async getMovies() {
+    this.loading = true;
     const movieResponse = await this.moviesService
       .getMoviesList(1, 'primary_release_date.desc')
       .pipe(take(1))

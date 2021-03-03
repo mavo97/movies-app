@@ -37,6 +37,7 @@ import { ImageSrcPipe } from './pipes/image-src.pipe';
 // Traduccion al español
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { LoadingcomponentComponent } from './components/shared/loadingcomponent/loadingcomponent.component';
 
 registerLocaleData(localeEs);
 
@@ -52,6 +53,7 @@ registerLocaleData(localeEs);
     DialogVideoComponent,
     VideoYoutubePipe,
     WhatsAppButtonComponent,
+    LoadingcomponentComponent,
   ],
   imports: [
     BrowserModule,

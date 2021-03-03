@@ -1,4 +1,4 @@
-<div class="container slider-container">
+<div class="container slider-container" *ngIf="!loading">
   <!-- You can now use your library component in app.component.html -->
 
   <ngx-slick-carousel
@@ -21,4 +21,8 @@
       ></app-movie-poster>
     </div>
   </ngx-slick-carousel>
+</div>
+
+<div class="container slider-container" *ngIf="loading">
+  <app-loadingcomponent></app-loadingcomponent>
 </div>

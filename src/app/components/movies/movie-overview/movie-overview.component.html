@@ -1,8 +1,6 @@
 <div class="container" *ngIf="loading">
   <mat-divider></mat-divider>
-  <div class="d-flex justify-content-center">
-    <mat-spinner class="mt-5"></mat-spinner>
-  </div>
+  <app-loadingcomponent></app-loadingcomponent>
 </div>
 <div class="container" *ngIf="!loading">
   <mat-divider></mat-divider>
