@@ -10,7 +10,7 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
-  searchMovie(movie: string, $event) {
+  searchMovie(movie: string) {
     if (movie.length > 0) {
       this.router.navigate(['buscar/', movie]);
     } else {

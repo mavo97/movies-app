@@ -20,7 +20,7 @@ export class SearchmovieComponent implements OnInit {
   moviesLength: number;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   pageIndex: number;
-
+  moviesStock: Movie[];
   constructor(
     private activatedRoute: ActivatedRoute,
     private moviesService: MoviesServiceService
@@ -28,6 +28,7 @@ export class SearchmovieComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.stockMovies();
     this.activatedRoute.params.subscribe(async (params) => {
       this.movie = params['movie'];
       this.movieResponse = await this.moviesService
@@ -43,9 +44,9 @@ export class SearchmovieComponent implements OnInit {
 
   async sliceListMovies($event: any) {
     if ($event) {
-      console.log($event);
+      // console.log($event);
       const index: number = $event.pageIndex;
-      console.log(index);
+      // console.log(index);
       this.loading = true;
       this.movieResponse = await this.moviesService
         .searchMovie(this.movie, index + 1)
@@ -54,8 +55,13 @@ export class SearchmovieComponent implements OnInit {
       this.pageSize = this.movieResponse.total_pages;
       this.moviesLength = this.movieResponse.total_results;
       this.pageIndex = index;
-      console.log(this.movieResponse);
+      // console.log(this.movieResponse);
       this.loading = false;
     }
+  }
+
+  stockMovies() {
+    this.moviesStock = JSON.parse(localStorage.getItem('movies'));
+    // console.log(this.moviesStock);
   }
 }

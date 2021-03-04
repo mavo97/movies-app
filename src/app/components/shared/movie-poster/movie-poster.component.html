@@ -8,7 +8,7 @@
 
 <div class="top-left">
   <ul class="list-inline">
-    <li class="list-inline-item badge-group mb-1">
+    <li class="list-inline-item badge-group mb-2">
       <span class="badge badge-blue">TMDB</span>
       <span class="badge badge-light">{{
         vote_average | number: "1.1-1"
@@ -31,6 +31,12 @@
       *ngIf="idCompare && !inStock(movies, idCompare)"
     >
       Próximamente
+    </li>
+    <li
+      class="list-inline-item badge bg-secondary text-light"
+      *ngIf="idExist && !inStock(movies, idExist)"
+    >
+      No disponible
     </li>
   </ul>
 </div>

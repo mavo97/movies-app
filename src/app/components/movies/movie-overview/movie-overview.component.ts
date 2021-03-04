@@ -56,4 +56,9 @@ export class MovieOverviewComponent implements OnInit {
       },
     });
   }
+
+  // Regresar una pagina atrás
+  return() {
+    window.history.back();
+  }
 }
