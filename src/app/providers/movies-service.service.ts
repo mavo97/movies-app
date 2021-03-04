@@ -49,4 +49,10 @@ export class MoviesServiceService {
       `${this.url2}/movie/${movieId}/videos?api_key=${this.apiKey}`
     );
   }
+
+  searchMovie(movieName: string, page: number): Observable<MovieResponse> {
+    return this.http.get<MovieResponse>(
+      `${this.url}/search/movie?api_key=${this.apiKey}&language=es-MX&&query=${movieName}&page=${page}`
+    );
+  }
 }

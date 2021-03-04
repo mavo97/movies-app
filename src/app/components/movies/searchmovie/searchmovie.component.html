@@ -1,0 +1,47 @@
+<div class="container" *ngIf="loading">
+  <app-loadingcomponent></app-loadingcomponent>
+</div>
+<div class="container" *ngIf="!loading">
+  <div *ngIf="movie && movieList">
+    <div class="alert alert-secondary" role="alert" *ngIf="movie.length > 0">
+      Un total de {{ totalResults }} resultados para {{ movie }}
+    </div>
+    <div class="row row-cols-2 row-cols-md-6" *ngIf="movieList.length > 0">
+      <div class="col" *ngFor="let movie of movieList">
+        <div class="card border-0 h-100">
+          <app-movie-poster
+            [imgSrc]="movie | imageSrc"
+            [vote_average]="movie.vote_average"
+            [release_date]="movie.release_date"
+            [id]="movie.id"
+          >
+          </app-movie-poster>
+          <div class="card-body">
+            <h5 class="card-title fs-6 lh-sms">{{ movie.title }}</h5>
+            <p class="card-text">
+              {{ movie.release_date | date: "MMMM d, yyyy" | titlecase }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="movieList.length < 1">
+      <div class="col-sm-12">
+        <div class="alert alert-info" role="alert">
+          No se encontraron resultados!
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-paginator
+    [length]="moviesLength"
+    [hidePageSize]="true"
+    [pageSize]="20"
+    (getNumberOfPages)="(pageSize - 1)"
+    [pageIndex]="pageIndex"
+    (page)="sliceListMovies($event)"
+    [showFirstLastButtons]="true"
+  >
+  </mat-paginator>
+</div>

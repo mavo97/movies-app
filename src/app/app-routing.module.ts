@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { MovieOverviewComponent } from './components/movies/movie-overview/movie-overview.component';
+import { SearchmovieComponent } from './components/movies/searchmovie/searchmovie.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'movie/:id', component: MovieOverviewComponent },
+  { path: 'buscar/:movie', component: SearchmovieComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' }, // redirect to `first-component`
 ];
 

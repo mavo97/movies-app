@@ -25,6 +25,7 @@ import { TrendingsSliderComponent } from './components/movies/trendings-slider/t
 import { MovieOverviewComponent } from './components/movies/movie-overview/movie-overview.component';
 import { DialogVideoComponent } from './components/shared/dialog-video/dialog-video.component';
 import { WhatsAppButtonComponent } from './components/shared/whats-app-button/whats-app-button.component';
+import { SearchmovieComponent } from './components/movies/searchmovie/searchmovie.component';
 
 // Libraries
 import { SlickCarouselModule } from 'ngx-slick-carousel';
@@ -54,6 +55,7 @@ registerLocaleData(localeEs);
     VideoYoutubePipe,
     WhatsAppButtonComponent,
     LoadingcomponentComponent,
+    SearchmovieComponent,
   ],
   imports: [
     BrowserModule,
