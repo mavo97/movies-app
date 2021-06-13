@@ -75,11 +75,9 @@ export class TrendingsSliderComponent implements OnInit {
 
   async getMovies() {
     this.loading = true;
-    const movieResponse = await this.moviesService
-      .getMoviesList(1, 'primary_release_date.desc')
-      .pipe(take(1))
-      .toPromise();
-    this.newMovies = movieResponse.results;
+    const movies: Movie[] = JSON.parse(localStorage.getItem('movies'));
+
+    this.newMovies = movies;
     this.getTrendings();
   }
 }

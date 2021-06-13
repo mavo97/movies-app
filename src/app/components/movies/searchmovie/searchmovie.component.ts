@@ -38,6 +38,7 @@ export class SearchmovieComponent implements OnInit {
       this.totalResults = this.movieResponse.total_results;
       this.pageSize = this.movieResponse.total_pages;
       this.moviesLength = this.movieResponse.total_results;
+      this.pageIndex = 0;
       this.loading = false;
     });
   }
