@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.totalPages = await (
       await this.moviesService
-        .getMoviesList(1, 'primary_release_date.desc')
+        .getMoviesList(1, 'original_order.desc')
         .pipe(take(1))
         .toPromise()
     ).total_pages;
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
     for (let i = 1; i <= this.pageSize; i++) {
       const movies = await (
         await this.moviesService
-          .getMoviesList(i, 'primary_release_date.desc')
+          .getMoviesList(i, 'original_order.desc')
           .pipe(take(1))
           .toPromise()
       ).results;
