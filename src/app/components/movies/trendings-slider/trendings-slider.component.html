@@ -1,6 +1,5 @@
-<div class="container slider-container" *ngIf="!loading">
+<div class="container slider-container">
   <!-- You can now use your library component in app.component.html -->
-
   <ngx-slick-carousel
     class="carousel"
     #slickModal="slick-carousel"
@@ -8,14 +7,14 @@
   >
     <div
       ngxSlickItem
-      *ngFor="let movie of trendingMovies | slice: 0:12"
+      *ngFor="let movie of tMovies | slice: 0:18"
       class="slide mt-3"
     >
       <app-movie-poster
         [imgSrc]="movie | imageSrc"
         [vote_average]="movie.vote_average"
         [release_date]="movie.release_date"
-        [movies]="newMovies"
+        [movies]="tMovies"
         [idCompare]="movie.id"
         [id]="movie.id"
       ></app-movie-poster>
@@ -23,6 +22,6 @@
   </ngx-slick-carousel>
 </div>
 
-<div class="container slider-container" *ngIf="loading">
+<!-- <div class="container slider-container" *ngIf="loading">
   <app-loadingcomponent></app-loadingcomponent>
-</div>
+</div> -->

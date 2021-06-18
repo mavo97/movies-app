@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MoviesServiceService } from '../../../providers/movies-service.service';
 import { MovieResponse } from '../../../models/movie-reponse.interface';
 import { Movie } from '../../../models/movie.interface';
@@ -10,13 +10,14 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./trendings-slider.component.css'],
 })
 export class TrendingsSliderComponent implements OnInit {
+  @Input() tMovies: Movie[] = [];
   trendingMovies: Movie[] = [];
   newMovies: Movie[] = [];
   loading: boolean;
   constructor(private moviesService: MoviesServiceService) {}
 
   ngOnInit(): void {
-    this.getMovies();
+    // this.getMovies();
   }
 
   slideConfig = {
@@ -73,11 +74,11 @@ export class TrendingsSliderComponent implements OnInit {
     });
   }
 
-  async getMovies() {
-    this.loading = true;
-    const movies: Movie[] = JSON.parse(localStorage.getItem('movies'));
+  // async getMovies() {
+  //   this.loading = true;
+  //   const movies: Movie[] = JSON.parse(localStorage.getItem('movies'));
 
-    this.newMovies = movies;
-    this.getTrendings();
-  }
+  //   this.newMovies = movies;
+  //   this.getTrendings();
+  // }
 }

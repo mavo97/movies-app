@@ -14,6 +14,7 @@ import { LocalStorageService } from '../../providers/local-storage.service';
 })
 export class HomeComponent implements OnInit {
   listMovies: Movie[] = [];
+  trendingMovies: Movie[] = [];
   pageSize: number;
   totalPages: number;
   moviesLength: number;
@@ -56,8 +57,19 @@ export class HomeComponent implements OnInit {
       ).results;
       this.sliceListMovies(false);
       movies.forEach((movie) => this.listMovies.push(movie));
+      const movies2 = movies;
+      movies2.forEach((movie) => this.trendingMovies.push(movie));
     }
     this.listMoviesCopy = this.listMovies;
+
+    this.trendingMovies.sort(function (a, b) {
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      return (
+        new Date(b.release_date).getTime() - new Date(a.release_date).getTime()
+      );
+    });
+    // console.log(this.trendingMovies);
     this.moviesLength = this.listMovies.length;
     this.loading = false;
     this.lsService.setItem('movies', JSON.stringify(this.listMovies));
@@ -144,6 +156,7 @@ export class HomeComponent implements OnInit {
     this.pageSize;
     this.moviesLength;
     this.listMoviesCopy = [];
+    this.trendingMovies = [];
     this.getMovies();
   }
 
@@ -152,12 +165,24 @@ export class HomeComponent implements OnInit {
     const total_pages: number = parseInt(
       JSON.parse(this.lsService.getItem('total_pages'))
     );
+    let movies2: Movie[] = JSON.parse(this.lsService.getItem('movies'));
+
     if (!this.lsService.compareTime()) {
       if (movies !== null && total_pages !== null) {
         this.listMovies = movies;
         this.listMoviesCopy = this.listMovies;
         this.moviesLength = this.listMovies.length;
         this.totalPages = total_pages;
+        this.trendingMovies = movies2;
+        this.trendingMovies.sort(function (a, b) {
+          // Turn your strings into dates, and then subtract them
+          // to get a value that is either negative, positive, or zero.
+          return (
+            new Date(b.release_date).getTime() -
+            new Date(a.release_date).getTime()
+          );
+        });
+        console.log(this.trendingMovies.slice(0, 18));
         this.sliceListMovies(false, 0);
       } else {
         await this.getMovies();
