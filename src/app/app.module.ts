@@ -39,6 +39,7 @@ import { ImageSrcPipe } from './pipes/image-src.pipe';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { LoadingcomponentComponent } from './components/shared/loadingcomponent/loadingcomponent.component';
+import { PaginatorComponent } from './components/shared/paginator/paginator.component';
 
 registerLocaleData(localeEs);
 
@@ -56,6 +57,7 @@ registerLocaleData(localeEs);
     WhatsAppButtonComponent,
     LoadingcomponentComponent,
     SearchmovieComponent,
+    PaginatorComponent,
   ],
   imports: [
     BrowserModule,

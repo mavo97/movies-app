@@ -1,0 +1,24 @@
+<div>
+    <nav class="pages">
+        <ul class="pagination pagination justify-content-center">
+            <li class="page-item" [ngClass]="{disabled: index === 0}">
+                <a class="page-link" (click)="decrementIndex(index - 1)">
+                    <i class="fas fa-chevron-circle-left"></i>
+                </a>
+            </li>
+            <li class="page-item" [ngClass]="{active: pag === index}"
+                *ngFor="let pag of pagesArray | slice: ((index === 5 || index >= 4) ? ((index + 3 === totalPages || index + 2 === totalPages || index + 1 === totalPages || index === totalPages) ? totalPages - 5 : index - 2) : 0) :  ((index === 5 || index >= 4) ? index + 3 : 5)">
+                <a class="page-link" (click)="changeIndexValue(pag)">{{pag + 1}}</a>
+            </li>
+            <li class="page-item" [ngClass]="{disabled: index === totalPages - 1}">
+                <a class="page-link" (click)="incrementIndex(index + 1)">
+                    <i class="fas fa-chevron-circle-right"></i>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+    <div class="d-flex justify-content-center pb-5">
+        <p class="fs-5">{{index ? index + 1 : 1}} de {{totalPages}}</p>
+    </div>
+</div>

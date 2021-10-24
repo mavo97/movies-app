@@ -110,10 +110,14 @@ export class HomeComponent implements OnInit {
       this.totalPages = Math.ceil(this.listMoviesCopy.length / 20);
       this.pagesArray2 = Array.from(Array(this.totalPages).keys());
       this.sliceListMovies2(false);
-      this.paginator.pageIndex = 0;
+      this.paginator &&
+        this.paginator.pageIndex &&
+        (this.paginator.pageIndex = 0);
     } else {
       this.moviesStorage();
-      this.paginator.pageIndex = 0;
+      this.paginator &&
+        this.paginator.pageIndex &&
+        (this.paginator.pageIndex = 0);
     }
   }
 
@@ -144,6 +148,7 @@ export class HomeComponent implements OnInit {
         (index + 1) * 20
       );
     } else {
+      this.index = 0;
       this.moviesToDisplay = this.listMoviesCopy.slice(0, 20);
     }
     if (scroll) {

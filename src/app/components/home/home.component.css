@@ -15,31 +15,3 @@
   margin-bottom: 20px;
   max-width: 100%;
 }
-
-nav.pages {
-  padding-bottom: 1rem;
-}
-
-.page-item.active .page-link {
-  background: #032541 !important;
-  border: 1px solid #032541 !important;
-  color: #fff !important;
-  cursor: pointer;
-}
-
-.page-item.disabled .page-link {
-  background: #fff !important;
-  color: gray !important;
-}
-
-.page-item .page-link {
-  background: #fff !important;
-  color: #032541 !important;
-  cursor: pointer;
-}
-
-@media (max-width: 1024px) {
-  nav.pages {
-    padding-bottom: 1rem;
-  }
-}
