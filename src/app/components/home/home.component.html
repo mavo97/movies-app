@@ -13,10 +13,7 @@
       <div class="col-sm-6">
         <mat-form-field appearance="fill">
           <mat-label>Género</mat-label>
-          <mat-select
-            (selectionChange)="selectGenre($event)"
-            [disabled]="loading"
-          >
+          <mat-select (selectionChange)="selectGenre($event)" [disabled]="loading">
             <mat-option>Todos</mat-option>
             <mat-option *ngFor="let genre of genres" [value]="genre.id">
               {{ genre.name }}
@@ -25,18 +22,11 @@
         </mat-form-field>
       </div>
     </div>
-    <div
-      class="row row-cols-2 row-cols-md-6"
-      *ngIf="moviesToDisplay.length > 0"
-    >
+    <div class="row row-cols-2 row-cols-md-6" *ngIf="moviesToDisplay.length > 0">
       <div class="col" *ngFor="let movie of moviesToDisplay">
         <div class="card border-0 h-100">
-          <app-movie-poster
-            [imgSrc]="movie | imageSrc"
-            [vote_average]="movie.vote_average"
-            [release_date]="movie.release_date"
-            [id]="movie.id"
-          >
+          <app-movie-poster [imgSrc]="movie | imageSrc" [vote_average]="movie.vote_average"
+            [release_date]="movie.release_date" [id]="movie.id">
           </app-movie-poster>
           <div class="card-body">
             <h5 class="card-title fs-6 lh-sms">{{ movie.title }}</h5>
@@ -55,23 +45,49 @@
       </div>
     </div>
   </div>
+  <nav class="pages">
+    <ul class="pagination pagination justify-content-center" *ngIf="!genre">
+      <li class="page-item" [ngClass]="{disabled: index === 0}">
+        <a class="page-link" (click)="sliceListMovies(true, index - 1)" [disabled]="index === 0">
+          <i class="fas fa-chevron-circle-left"></i>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{active: pag === index}"
+        *ngFor="let pag of pagesArray | slice: ((index === 5 || index >= 4) ? ((index + 3 === totalPages || index + 2 === totalPages || index + 1 === totalPages || index === totalPages) ? totalPages - 5 : index - 2) : 0) :  ((index === 5 || index >= 4) ? index + 3 : 5)">
+        <a class="page-link" (click)="sliceListMovies(true, pag)">{{pag + 1}}</a>
+      </li>
+      <li class="page-item" [ngClass]="{disabled: index === totalPages - 1}">
+        <a class="page-link" (click)="sliceListMovies(true, index + 1)" [disabled]="index === totalPages - 1">
+          <i class="fas fa-chevron-circle-right"></i>
+        </a>
+      </li>
+    </ul>
+    <ul class="pagination pagination justify-content-center" *ngIf="genre">
+      <li class="page-item" [ngClass]="{disabled: index === 0}">
+        <a class="page-link" (click)="sliceListMovies2(true, index - 1)" [disabled]="index === 0">
+          <i class="fas fa-chevron-circle-left"></i>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{active: pag === index}"
+        *ngFor="let pag of pagesArray2 | slice: ((index === 5 || index >= 4) ? ((index + 3 === totalPages || index + 2 === totalPages || index + 1 === totalPages || index === totalPages) ? totalPages - 5 : index - 2) : 0) :  ((index === 5 || index >= 4) ? index + 3 : 5)">
+        <a class="page-link" (click)="sliceListMovies2(true, pag)">{{pag + 1}}</a>
+      </li>
+      <li class="page-item" [ngClass]="{disabled: index === totalPages - 1}">
+        <a class="page-link" (click)="sliceListMovies2(true, index + 1)" [disabled]="index === totalPages - 1">
+          <i class="fas fa-chevron-circle-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="d-flex justify-content-center pb-5">
+    <p class="fs-5" *ngIf="!genre">{{index ? index + 1 : 1}} de {{totalPages}}</p>
+    <p class="fs-5" *ngIf="genre">{{index ? index + 1 : 1}} de {{totalPages}}</p>
+  </div>
   <app-whats-app-button></app-whats-app-button>
-  <mat-paginator
-    *ngIf="!genre"
-    [length]="moviesLength"
-    [hidePageSize]="true"
-    [pageSize]="20"
-    (getNumberOfPages)="(pageSize - 1)"
-    (page)="sliceListMovies(true, $event.pageIndex)"
-  >
+  <!-- <mat-paginator *ngIf="!genre" [length]="moviesLength" [hidePageSize]="true" [pageSize]="20"
+    (getNumberOfPages)="(pageSize - 1)" (page)="sliceListMovies(true, $event.pageIndex)">
   </mat-paginator>
-  <mat-paginator
-    *ngIf="genre"
-    [length]="moviesLength"
-    [hidePageSize]="true"
-    [pageSize]="20"
-    (getNumberOfPages)="(pageSize - 1)"
-    [pageIndex]="0"
-    (page)="sliceListMovies2(true, $event.pageIndex)"
-  ></mat-paginator>
+  <mat-paginator *ngIf="genre" [length]="moviesLength" [hidePageSize]="true" [pageSize]="20"
+    (getNumberOfPages)="(pageSize - 1)" [pageIndex]="0" (page)="sliceListMovies2(true, $event.pageIndex)">
+  </mat-paginator> -->
 </div>

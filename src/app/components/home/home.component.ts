@@ -26,6 +26,10 @@ export class HomeComponent implements OnInit {
   index: number;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   loading: boolean;
+  currentPage: number = 0;
+  pagesArray: number[] = [];
+  pagesArray2: number[] = [];
+
   constructor(
     private moviesService: MoviesServiceService,
     private lsService: LocalStorageService
@@ -48,6 +52,8 @@ export class HomeComponent implements OnInit {
         .toPromise()
     ).total_pages;
     this.pageSize = this.totalPages;
+    this.pagesArray = Array.from(Array(this.totalPages).keys());
+    console.log(this.pagesArray, 'PAGES ARRAY');
     for (let i = 1; i <= this.pageSize; i++) {
       const movies = await (
         await this.moviesService
@@ -101,6 +107,8 @@ export class HomeComponent implements OnInit {
       });
       this.pageSize = this.listMoviesCopy.length / 20;
       this.moviesLength = this.listMoviesCopy.length;
+      this.totalPages = Math.ceil(this.listMoviesCopy.length / 20);
+      this.pagesArray2 = Array.from(Array(this.totalPages).keys());
       this.sliceListMovies2(false);
       this.paginator.pageIndex = 0;
     } else {
@@ -110,6 +118,7 @@ export class HomeComponent implements OnInit {
   }
 
   sliceListMovies(scroll?: boolean, index?: number) {
+    console.log(index, 'INDEX');
     // console.log(index);
     if (index) {
       this.index = index;
@@ -118,6 +127,7 @@ export class HomeComponent implements OnInit {
         (index + 1) * 20
       );
     } else {
+      this.index = 0;
       this.moviesToDisplay = this.listMovies.slice(0, 20);
     }
     if (scroll) {
@@ -173,6 +183,8 @@ export class HomeComponent implements OnInit {
         this.listMoviesCopy = this.listMovies;
         this.moviesLength = this.listMovies.length;
         this.totalPages = total_pages;
+        this.pagesArray = Array.from(Array(this.totalPages).keys());
+        console.log(this.pagesArray, 'PAGES ARRAY');
         this.trendingMovies = movies2;
         this.trendingMovies.sort(function (a, b) {
           // Turn your strings into dates, and then subtract them
