@@ -1,13 +1,29 @@
-<h2 mat-dialog-title>Lista de selección</h2>
-<mat-dialog-content>
-  <form class="mb-2">
+<h2 mat-dialog-title>
+  {{ moviesList.length }}
+  {{ movies.length === 1 ? "seleccionado" : "seleccionados" }}
+</h2>
+<mat-dialog-content *ngIf="moviesList.length > 0">
+  <form class="mb-2" [formGroup]="form">
     <label for="mobileInput" class="form-label">Número de telefono</label>
     <input
       type="email"
       class="form-control"
       id="mobileInput"
       placeholder="*Opcional"
+      formControlName="mobile"
+      autocomplete="off"
     />
+    <span
+      *ngIf="
+        (form.controls['mobile'].errors?.maxlength ||
+          form.controls['mobile'].errors?.minlength ||
+          form.controls['mobile'].errors?.pattern) &&
+        form.controls['mobile'].dirty &&
+        form.controls['mobile'].touched
+      "
+      class="text-danger"
+      >Solo números y deben ser 10 digítos...</span
+    >
   </form>
 </mat-dialog-content>
 <mat-dialog-content class="mat-typography">
@@ -46,5 +62,13 @@
 <mat-dialog-actions align="end">
   <mat-divider></mat-divider>
   <button mat-button mat-dialog-close>Cerrar</button>
+  <button
+    mat-mini-fab
+    color="primary"
+    style="color: white"
+    [disabled]="!form.valid || moviesList.length < 1"
+  >
+    <mat-icon>save</mat-icon>
+  </button>
   <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
 </mat-dialog-actions>

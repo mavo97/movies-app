@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Movie } from '../../../../models/movie.interface';
 import { LocalStorageService } from '../../../../providers/local-storage.service';
 
@@ -9,8 +10,17 @@ import { LocalStorageService } from '../../../../providers/local-storage.service
 })
 export class DialoglistcontentComponent implements OnInit {
   moviesList: Movie[] = [];
+  form: FormGroup;
 
-  constructor(private _localStorageService: LocalStorageService) {}
+  constructor(private _localStorageService: LocalStorageService) {
+    this.form = new FormGroup({
+      mobile: new FormControl('', [
+        Validators.maxLength(10),
+        Validators.minLength(10),
+        Validators.pattern('^(0|[1-9][0-9]*)$'),
+      ]),
+    });
+  }
 
   ngOnInit(): void {
     console.log('open');

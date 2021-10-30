@@ -43,6 +43,7 @@ import { LoadingcomponentComponent } from './components/shared/loadingcomponent/
 import { PaginatorComponent } from './components/shared/paginator/paginator.component';
 import { MoviesListButtonComponent } from './components/shared/movies-list-button/movies-list-button.component';
 import { DialoglistcontentComponent } from './components/shared/movies-list-button/dialoglistcontent/dialoglistcontent.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 registerLocaleData(localeEs);
 
@@ -82,6 +83,8 @@ registerLocaleData(localeEs);
     MatButtonModule,
     MatListModule,
     SlickCarouselModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent],
