@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "mavo-pelis"
+  },
+  "targets": {
+    "mavo-pelis": {
+      "hosting": {
+        "movies-app": [
+          "mavo-pelis"
+        ]
+      }
+    }
   }
 }

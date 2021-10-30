@@ -25,6 +25,22 @@
             />
           </div>
         </li>
+        <br />
+        <div *ngIf="_authService.auth.user | async as user; else showLogin">
+          <button
+            mat-mini-fab
+            color="primary"
+            (click)="logout()"
+            class="margin"
+          >
+            <mat-icon>exit_to_app</mat-icon>
+          </button>
+        </div>
+        <ng-template #showLogin>
+          <button mat-icon-button (click)="login()" class="margin">
+            <mat-icon>login</mat-icon>
+          </button>
+        </ng-template>
       </ul>
     </div>
   </div>

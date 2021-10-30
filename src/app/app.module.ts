@@ -44,8 +44,11 @@ import { PaginatorComponent } from './components/shared/paginator/paginator.comp
 import { MoviesListButtonComponent } from './components/shared/movies-list-button/movies-list-button.component';
 import { DialoglistcontentComponent } from './components/shared/movies-list-button/dialoglistcontent/dialoglistcontent.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 registerLocaleData(localeEs);
+
+// Firebase
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -85,6 +88,7 @@ registerLocaleData(localeEs);
     SlickCarouselModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent],
