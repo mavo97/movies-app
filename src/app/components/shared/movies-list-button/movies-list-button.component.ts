@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../../../providers/local-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialoglistcontentComponent } from './dialoglistcontent/dialoglistcontent.component';
 
 @Component({
   selector: 'app-movies-list-button',
@@ -8,8 +10,10 @@ import { LocalStorageService } from '../../../providers/local-storage.service';
 })
 export class MoviesListButtonComponent implements OnInit {
   itemsNumber: number = 0;
-
-  constructor(private _localStorageService: LocalStorageService) {}
+  constructor(
+    private _localStorageService: LocalStorageService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this._localStorageService.subjectListItems.subscribe((items) => {
@@ -19,6 +23,14 @@ export class MoviesListButtonComponent implements OnInit {
   }
 
   saveList() {
-    console.log('HOLA');
+    this.openDialog();
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialoglistcontentComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

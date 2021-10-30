@@ -17,6 +17,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
 
 // Components
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -41,6 +42,7 @@ import { registerLocaleData } from '@angular/common';
 import { LoadingcomponentComponent } from './components/shared/loadingcomponent/loadingcomponent.component';
 import { PaginatorComponent } from './components/shared/paginator/paginator.component';
 import { MoviesListButtonComponent } from './components/shared/movies-list-button/movies-list-button.component';
+import { DialoglistcontentComponent } from './components/shared/movies-list-button/dialoglistcontent/dialoglistcontent.component';
 
 registerLocaleData(localeEs);
 
@@ -60,6 +62,7 @@ registerLocaleData(localeEs);
     SearchmovieComponent,
     PaginatorComponent,
     MoviesListButtonComponent,
+    DialoglistcontentComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +80,7 @@ registerLocaleData(localeEs);
     MatProgressSpinnerModule,
     MatDialogModule,
     MatButtonModule,
+    MatListModule,
     SlickCarouselModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],
