@@ -40,6 +40,7 @@ import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { LoadingcomponentComponent } from './components/shared/loadingcomponent/loadingcomponent.component';
 import { PaginatorComponent } from './components/shared/paginator/paginator.component';
+import { MoviesListButtonComponent } from './components/shared/movies-list-button/movies-list-button.component';
 
 registerLocaleData(localeEs);
 
@@ -58,6 +59,7 @@ registerLocaleData(localeEs);
     LoadingcomponentComponent,
     SearchmovieComponent,
     PaginatorComponent,
+    MoviesListButtonComponent,
   ],
   imports: [
     BrowserModule,

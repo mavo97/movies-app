@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Movie } from '../../../models/movie.interface';
+import { LocalStorageService } from '../../../providers/local-storage.service';
 
 @Component({
   selector: 'app-movie-poster',
@@ -19,13 +20,15 @@ export class MoviePosterComponent implements OnInit {
   time: number;
   movieTime: number;
   moviesSelectedArray: Movie[] = [];
-  constructor() {}
+
+  constructor(private _localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
     this.time = new Date().getTime() - 5.256e9;
     this.movieTime = new Date(this.release_date).getTime();
     // console.log(this.movieTime, this.time);
     // console.log(this.time > this.movieTime ? true : false);
+    this.getItemsStatus();
   }
 
   inStock(movies: Movie[], id: number): Boolean {
@@ -57,6 +60,10 @@ export class MoviePosterComponent implements OnInit {
         JSON.stringify(moviesSelectedStorage.filter((movie) => movie.id !== id))
       );
     }
+    console.log(moviesSelectedStorage.length);
+    this._localStorageService.subjectChangeStatus(
+      JSON.parse(localStorage.getItem('moviesSelected')).length
+    );
   }
 
   itemSelected(id: number): boolean {
@@ -71,5 +78,12 @@ export class MoviePosterComponent implements OnInit {
       return false;
     }
     return false;
+  }
+
+  getItemsStatus() {
+    const moviesSelectedStorage: Movie[] = JSON.parse(
+      localStorage.getItem('moviesSelected')
+    );
+    this._localStorageService.subjectChangeStatus(moviesSelectedStorage.length);
   }
 }

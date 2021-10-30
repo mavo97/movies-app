@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
+  subjectListItems = new BehaviorSubject(0);
+
   constructor() {}
 
   getItem(itemName: string): string {
@@ -28,5 +31,9 @@ export class LocalStorageService {
     // console.log(expiryTime, 'expiry');
     // console.log(new Date());
     return timeToCompare > currentTime ? false : true;
+  }
+
+  subjectChangeStatus(itemsNumber: number) {
+    this.subjectListItems.next(itemsNumber);
   }
 }
