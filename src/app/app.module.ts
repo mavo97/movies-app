@@ -74,6 +74,7 @@ registerLocaleData(localeEs);
     MatDividerModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatButtonModule,
     SlickCarouselModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],

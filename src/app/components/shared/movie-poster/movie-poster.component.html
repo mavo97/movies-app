@@ -40,3 +40,14 @@
     </li>
   </ul>
 </div>
+<ng-container *ngIf="selectButton">
+  <div class="top-center">
+    <button
+      mat-mini-fab
+      [ngClass]="{ active: itemSelected(id), noActive: !itemSelected(id) }"
+      (click)="selectMovie(id)"
+    >
+      <mat-icon>check_circle</mat-icon>
+    </button>
+  </div>
+</ng-container>

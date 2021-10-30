@@ -22,6 +22,27 @@ img {
   padding: 0.15rem;
   z-index: 1;
 }
+.top-center {
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  position: absolute;
+  padding: 0.15rem;
+  z-index: 1;
+}
+
+.noActive {
+  background: #696969;
+  color: #a9a9a9;
+  border: none !important;
+}
+.active {
+  background: #1877f2;
+  color: white;
+  border: none !important;
+}
+
 .badge-group::before {
   content: "";
   width: 0;

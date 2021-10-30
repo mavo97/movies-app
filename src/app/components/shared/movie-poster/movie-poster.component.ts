@@ -14,9 +14,11 @@ export class MoviePosterComponent implements OnInit {
   @Input() idCompare: number;
   @Input() idExist: number;
   @Input() id: number;
+  @Input() selectButton: boolean = false;
 
   time: number;
   movieTime: number;
+  moviesSelectedArray: Movie[] = [];
   constructor() {}
 
   ngOnInit(): void {
@@ -29,5 +31,45 @@ export class MoviePosterComponent implements OnInit {
   inStock(movies: Movie[], id: number): Boolean {
     const found = movies.find((movie) => movie.id === id);
     return found !== undefined ? true : false;
+  }
+
+  selectMovie(id: number) {
+    const moviesSelectedStorage: Movie[] = JSON.parse(
+      localStorage.getItem('moviesSelected')
+    );
+
+    if (!this.itemSelected(id)) {
+      const moviesStorage: Movie[] = JSON.parse(localStorage.getItem('movies'));
+      const movie: Movie = moviesStorage.find((movie) => movie.id === id);
+
+      let moviesToSave = [];
+      if (moviesSelectedStorage) {
+        moviesToSave = moviesSelectedStorage;
+        moviesToSave.push(movie);
+        localStorage.setItem('moviesSelected', JSON.stringify(moviesToSave));
+      } else {
+        moviesToSave.push(movie);
+        localStorage.setItem('moviesSelected', JSON.stringify(moviesToSave));
+      }
+    } else {
+      localStorage.setItem(
+        'moviesSelected',
+        JSON.stringify(moviesSelectedStorage.filter((movie) => movie.id !== id))
+      );
+    }
+  }
+
+  itemSelected(id: number): boolean {
+    const moviesSelectedStorage: Movie[] = JSON.parse(
+      localStorage.getItem('moviesSelected')
+    );
+    if (moviesSelectedStorage) {
+      const movie = moviesSelectedStorage.find((m) => m.id === id);
+      if (movie) {
+        return true;
+      }
+      return false;
+    }
+    return false;
   }
 }
