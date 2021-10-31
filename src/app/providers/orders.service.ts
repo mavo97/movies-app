@@ -3,6 +3,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { Order } from '../models/order.interface';
 
 @Injectable({
@@ -23,5 +24,9 @@ export class OrdersService {
       ...order,
     };
     this.ordersCollection.doc(id).set(orderToSave);
+  }
+
+  getOrders(): Observable<any[]> {
+    return this.ordersCollection.valueChanges();
   }
 }

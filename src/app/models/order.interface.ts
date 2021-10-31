@@ -5,4 +5,5 @@ export interface Order {
   mobile: number;
   movies: MovieSelected[];
   createdDate: number;
+  status: boolean;
 }

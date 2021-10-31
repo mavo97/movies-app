@@ -19,6 +19,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatChipsModule } from '@angular/material/chips';
 
 // Components
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -51,6 +53,7 @@ registerLocaleData(localeEs);
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { UserInDirective } from './directives/user-in.directive';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +73,7 @@ import { UserInDirective } from './directives/user-in.directive';
     MoviesListButtonComponent,
     DialoglistcontentComponent,
     UserInDirective,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +92,9 @@ import { UserInDirective } from './directives/user-in.directive';
     MatDialogModule,
     MatButtonModule,
     MatListModule,
+    MatTableModule,
     MatSnackBarModule,
+    MatChipsModule,
     SlickCarouselModule,
     FormsModule,
     ReactiveFormsModule,

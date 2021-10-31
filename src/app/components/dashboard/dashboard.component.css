@@ -1,0 +1,25 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+}
+
+@media only screen and (max-width: 700px) {
+  .mobile,
+  .createdDate {
+    width: 30% !important;
+  }
+
+  .status,
+  .movies {
+    width: 20% !important;
+  }
+}

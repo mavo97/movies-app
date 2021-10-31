@@ -57,6 +57,7 @@ export class DialoglistcontentComponent implements OnInit {
           release_date: movie.release_date,
         };
       }),
+      status: true,
       createdDate: new Date().getTime(),
     };
 
