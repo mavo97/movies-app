@@ -1,52 +1,32 @@
-<a [routerLink]="['/movie', id]"
-  ><img
-    class="rounded img-fluid img-size"
-    src="{{ imgSrc }}"
-    alt=""
-    width="100%"
-/></a>
+<a [routerLink]="['/movie', id]"><img class="rounded img-fluid img-size" src="{{ imgSrc }}" alt="" width="100%" /></a>
 
-<div class="top-left">
+<div class="top-left" *ngIf="vote_average">
   <ul class="list-inline">
     <li class="list-inline-item badge-group mb-2">
       <span class="badge badge-blue">TMDB</span>
       <span class="badge badge-light">{{
         vote_average | number: "1.1-1"
-      }}</span>
+        }}</span>
     </li>
-    <li
-      class="list-inline-item badge badge-danger text-white"
-      *ngIf="idCompare && time < movieTime && inStock(movies, idCompare)"
-    >
+    <li class="list-inline-item badge badge-danger text-white"
+      *ngIf="idCompare && time < movieTime && inStock(movies, idCompare)">
       Nuevo
     </li>
-    <li
-      class="list-inline-item badge badge-danger text-white"
-      *ngIf="!idCompare && time < movieTime"
-    >
+    <li class="list-inline-item badge badge-danger text-white" *ngIf="!idCompare && time < movieTime">
       Nuevo
     </li>
-    <li
-      class="list-inline-item badge bg-warning text-dark"
-      *ngIf="idCompare && !inStock(movies, idCompare)"
-    >
+    <li class="list-inline-item badge bg-warning text-dark" *ngIf="idCompare && !inStock(movies, idCompare)">
       Próximamente
     </li>
-    <li
-      class="list-inline-item badge bg-secondary text-light"
-      *ngIf="idExist && !inStock(movies, idExist)"
-    >
+    <li class="list-inline-item badge bg-secondary text-light" *ngIf="idExist && !inStock(movies, idExist)">
       No disponible
     </li>
   </ul>
 </div>
 <ng-container *ngIf="selectButton">
   <div class="top-center" *appUserIn>
-    <button
-      mat-mini-fab
-      [ngClass]="{ active: itemSelected(id), noActive: !itemSelected(id) }"
-      (click)="selectMovie(id)"
-    >
+    <button mat-mini-fab [ngClass]="{ active: itemSelected(id), noActive: !itemSelected(id) }"
+      (click)="selectMovie(id)">
       <mat-icon>check_circle</mat-icon>
     </button>
   </div>

@@ -4,6 +4,7 @@ import {
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Order } from '../models/order.interface';
 
 @Injectable({
@@ -28,5 +29,16 @@ export class OrdersService {
 
   getOrders(): Observable<any[]> {
     return this.ordersCollection.valueChanges();
+  }
+
+  getOrder(id: string): Observable<any> {
+    const orderDocument = this.afs.doc<Order>('orders/' + id);
+    return orderDocument.snapshotChanges().pipe(
+      map((changes) => {
+        const data = changes.payload.data();
+        const uid = changes.payload.id;
+        return { uid, ...data };
+      })
+    );
   }
 }

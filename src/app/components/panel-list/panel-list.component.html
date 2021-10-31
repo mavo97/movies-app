@@ -1,1 +1,23 @@
-<p>panel-list works!</p>
+<div class="container mb-3">
+    <button class="btn btn-warning mb-3" (click)="return()">Regresar</button>
+    <mat-divider></mat-divider>
+</div>
+<div class="container">
+    <ng-container *ngIf="order">
+        <div class="row row-cols-2 row-cols-md-6" *ngIf="order.movies.length > 0">
+            <div class="col" *ngFor="let movie of order.movies">
+                <div class="card border-0 h-100">
+                    <app-movie-poster [imgSrc]="movie | imageSrc" [vote_average]="movie.vote_average"
+                        [release_date]="movie.release_date" [id]="movie.id">
+                    </app-movie-poster>
+                    <div class="card-body">
+                        <h5 class="card-title fs-6 lh-sms">{{ movie.title }}</h5>
+                        <p class="card-text">
+                            {{ movie.release_date | date: "MMMM d, yyyy" | titlecase }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
