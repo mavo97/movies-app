@@ -24,7 +24,6 @@ export class AuthServiceService {
   }
 
   addUser(user: any, uid: string) {
-    console.log(user, 'USERUSER');
     const userToSave: any = {
       uid: uid,
       email: user.email,

@@ -41,7 +41,7 @@
   </ul>
 </div>
 <ng-container *ngIf="selectButton">
-  <div class="top-center">
+  <div class="top-center" *appUserIn>
     <button
       mat-mini-fab
       [ngClass]="{ active: itemSelected(id), noActive: !itemSelected(id) }"

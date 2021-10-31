@@ -27,7 +27,6 @@ export class NavbarComponent implements OnInit {
     const userResponse = await this._authService.googleLogin();
     this._authService.getUser(userResponse.user.uid).subscribe((user) => {
       if (!user.email) {
-        console.log('holaa');
         this._authService.addUser(userResponse.user, userResponse.user.uid);
       }
     });

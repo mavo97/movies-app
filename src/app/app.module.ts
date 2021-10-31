@@ -49,6 +49,7 @@ registerLocaleData(localeEs);
 // Firebase
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
+import { UserInDirective } from './directives/user-in.directive';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { environment } from '../environments/environment';
     PaginatorComponent,
     MoviesListButtonComponent,
     DialoglistcontentComponent,
+    UserInDirective,
   ],
   imports: [
     BrowserModule,
