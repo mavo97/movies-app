@@ -41,4 +41,8 @@ export class OrdersService {
       })
     );
   }
+
+  editOrder(order: Order) {
+    return this.ordersCollection.doc(order.id).update(order);
+  }
 }

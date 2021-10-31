@@ -21,6 +21,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 // Components
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -97,6 +99,8 @@ import { PanelListComponent } from './components/panel-list/panel-list.component
     MatTableModule,
     MatSnackBarModule,
     MatChipsModule,
+    MatTabsModule,
+    MatAutocompleteModule,
     SlickCarouselModule,
     FormsModule,
     ReactiveFormsModule,
