@@ -93,4 +93,15 @@ export class PanelListComponent implements OnInit {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }
+
+  async completeList() {
+    try {
+      this.order.status = false;
+      await this._ordersService.editOrder(this.order);
+      this.openSnackBar('Lista completada...', 'Success');
+    } catch (error) {
+      // console.log(error, 'error');
+      this.openSnackBar('No se guardo el status...', 'Vuelve a intentar!');
+    }
+  }
 }

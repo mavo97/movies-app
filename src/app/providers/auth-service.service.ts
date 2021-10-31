@@ -8,6 +8,7 @@ import firebase from 'firebase/app';
 import { User } from '../models/user.interface';
 import { Observable, of } from 'rxjs';
 import { switchMap, take, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,11 @@ export class AuthServiceService {
   private usersCollection: AngularFirestoreCollection<User>;
   user$: Observable<User>;
 
-  constructor(public auth: AngularFireAuth, private afs: AngularFirestore) {
+  constructor(
+    public auth: AngularFireAuth,
+    private afs: AngularFirestore,
+    private _router: Router
+  ) {
     this.usersCollection = afs.collection<User>('users');
     this.user$ = this.auth.authState.pipe(
       switchMap((user) => {
@@ -45,6 +50,7 @@ export class AuthServiceService {
 
   logout() {
     this.auth.signOut();
+    this._router.navigate(['/']);
   }
 
   getUser(id: string): Observable<User> {
