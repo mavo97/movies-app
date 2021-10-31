@@ -6,17 +6,27 @@ import {
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
 import { User } from '../models/user.interface';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { switchMap, take, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthServiceService {
   private usersCollection: AngularFirestoreCollection<User>;
+  user$: Observable<User>;
 
   constructor(public auth: AngularFireAuth, private afs: AngularFirestore) {
     this.usersCollection = afs.collection<User>('users');
+    this.user$ = this.auth.authState.pipe(
+      switchMap((user) => {
+        if (user) {
+          return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+        }
+      })
+    );
   }
 
   googleLogin() {

@@ -54,6 +54,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { UserInDirective } from './directives/user-in.directive';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PanelListComponent } from './components/panel-list/panel-list.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     DialoglistcontentComponent,
     UserInDirective,
     DashboardComponent,
+    PanelListComponent,
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { OrdersService } from '../../providers/orders.service';
 import { Order } from '../../models/order.interface';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   orders: Order[] = [];
 
-  constructor(private _ordersService: OrdersService) {}
+  constructor(private _ordersService: OrdersService, private _router: Router) {}
 
   ngOnInit(): void {
     this._ordersService.getOrders().subscribe((data) => {
@@ -47,5 +48,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   formatDate(date: number): string {
     moment.locale('es');
     return moment(new Date(date)).startOf('hour').fromNow();
+  }
+
+  openList(id: string) {
+    this._router.navigate(['/panel', id]);
   }
 }

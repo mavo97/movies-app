@@ -18,7 +18,7 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="movies"> Movies </th>
                 <!-- <td mat-cell *matCellDef="let row"> {{row.movies}} </td> -->
                 <td mat-cell *matCellDef="let row" class="movies">
-                    <button mat-icon-button>
+                    <button mat-icon-button (click)="openList(row.id)">
                         <mat-icon>movie</mat-icon>
                     </button>
                 </td>
