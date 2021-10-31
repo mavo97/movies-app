@@ -38,6 +38,10 @@ export class AuthServiceService {
     return this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 
+  facebookLogin() {
+    return this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
+  }
+
   addUser(user: any, uid: string) {
     const userToSave: any = {
       uid: uid,

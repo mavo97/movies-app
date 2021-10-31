@@ -28,6 +28,10 @@
   margin-left: 1rem;
 }
 
+.fb {
+  color: #1877f2 !important;
+}
+
 @media (max-width: 1024px) {
   .margin {
     margin-left: 0;

@@ -32,6 +32,15 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  async loginFacebook() {
+    const userResponse = await this._authService.facebookLogin();
+    this._authService.getUser(userResponse.user.uid).subscribe((user) => {
+      if (!user.email) {
+        this._authService.addUser(userResponse.user, userResponse.user.uid);
+      }
+    });
+  }
+
   logout() {
     this._authService.logout();
   }
