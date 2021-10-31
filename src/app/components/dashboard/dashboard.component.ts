@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   formatDate(date: number): string {
     moment.locale('es');
-    return moment(new Date(date)).startOf('hour').fromNow();
+    return moment(new Date(date)).startOf('minute').fromNow();
   }
 
   openList(id: string) {
