@@ -18,6 +18,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Components
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -87,6 +88,7 @@ import { UserInDirective } from './directives/user-in.directive';
     MatDialogModule,
     MatButtonModule,
     MatListModule,
+    MatSnackBarModule,
     SlickCarouselModule,
     FormsModule,
     ReactiveFormsModule,

@@ -84,6 +84,10 @@ export class MoviePosterComponent implements OnInit {
     const moviesSelectedStorage: Movie[] = JSON.parse(
       localStorage.getItem('moviesSelected')
     );
-    this._localStorageService.subjectChangeStatus(moviesSelectedStorage.length);
+    if (moviesSelectedStorage) {
+      this._localStorageService.subjectChangeStatus(
+        moviesSelectedStorage.length
+      );
+    }
   }
 }
