@@ -45,4 +45,8 @@ export class OrdersService {
   editOrder(order: Order) {
     return this.ordersCollection.doc(order.id).update(order);
   }
+
+  deleteOrder(id: string) {
+    return this.ordersCollection.doc(id).delete();
+  }
 }

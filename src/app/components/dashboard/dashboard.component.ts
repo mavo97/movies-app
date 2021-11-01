@@ -16,10 +16,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['mobile', 'movies', 'status', 'createdDate'];
+  displayedColumns: string[] = [
+    'mobile',
+    'movies',
+    'status',
+    'createdDate',
+    'delete',
+  ];
   dataSource: MatTableDataSource<Order>;
 
   orders: Order[] = [];
+  mobile: boolean = false;
 
   constructor(private _ordersService: OrdersService, private _router: Router) {}
 
@@ -32,6 +39,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+
+    if (window.screen.width <= 700) {
+      this.displayedColumns = this.displayedColumns.filter(
+        (column) => column !== 'delete'
+      );
+      this.mobile = true;
+    }
   }
 
   ngAfterViewInit() {}
@@ -52,5 +66,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   openList(id: string) {
     this._router.navigate(['/panel', id]);
+  }
+
+  deleteOrder(id: string) {
+    this._ordersService.deleteOrder(id);
   }
 }

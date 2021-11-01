@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../../../providers/local-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialoglistcontentComponent } from './dialoglistcontent/dialoglistcontent.component';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movies-list-button',
@@ -18,12 +19,17 @@ export class MoviesListButtonComponent implements OnInit {
   ngOnInit(): void {
     this._localStorageService.subjectListItems.subscribe((items) => {
       this.itemsNumber = items;
-      console.log(items);
     });
   }
 
   saveList() {
-    this.openDialog();
+    this._localStorageService.subjectListItems
+      .pipe(take(1))
+      .subscribe((items) => {
+        if (items > 0) {
+          this.openDialog();
+        }
+      });
   }
 
   openDialog() {
