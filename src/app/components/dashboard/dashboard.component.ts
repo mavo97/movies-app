@@ -34,7 +34,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this._ordersService.getOrders().subscribe((data) => {
       console.log(data);
       this.orders = data;
-      // Assign the data to the data source for the table to render
+      this.orders = this.orders.sort((a, b) => {
+        return b.createdDate - a.createdDate;
+      });
       this.dataSource = new MatTableDataSource(this.orders);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

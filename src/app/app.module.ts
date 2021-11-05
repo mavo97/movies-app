@@ -23,6 +23,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatBadgeModule } from '@angular/material/badge';
 
 // Components
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -101,6 +102,7 @@ import { PanelListComponent } from './components/panel-list/panel-list.component
     MatChipsModule,
     MatTabsModule,
     MatAutocompleteModule,
+    MatBadgeModule,
     SlickCarouselModule,
     FormsModule,
     ReactiveFormsModule,
