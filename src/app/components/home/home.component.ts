@@ -6,6 +6,8 @@ import { Genre } from '../../models/genre.interface';
 import { GenreResponse } from '../../models/genre-response.interface';
 import { MatPaginator } from '@angular/material/paginator';
 import { LocalStorageService } from '../../providers/local-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditListComponent } from '../shared/edit-list/edit-list.component';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +34,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private moviesService: MoviesServiceService,
-    private lsService: LocalStorageService
+    private lsService: LocalStorageService,
+    public _dialog: MatDialog
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -212,5 +215,13 @@ export class HomeComponent implements OnInit {
 
   setExpiryStorage() {
     this.lsService.setExpiry();
+  }
+
+  openDialog() {
+    const dialogRef = this._dialog.open(EditListComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

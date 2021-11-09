@@ -7,3 +7,11 @@
 .example-full-width {
   width: 100%;
 }
+.scroll {
+  overflow-y: auto !important;
+  max-height: 550px;
+}
+
+.mt0 {
+  margin-top: 0 !important;
+}

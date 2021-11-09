@@ -38,7 +38,11 @@
       </ng-container>
     </mat-tab>
     <mat-tab label="Editar lista">
-      <app-edit-list [order]="order" [options]="options"></app-edit-list>
+      <app-edit-list
+        [order]="order"
+        [options]="options"
+        [edit]="true"
+      ></app-edit-list>
     </mat-tab>
   </mat-tab-group>
 </div>

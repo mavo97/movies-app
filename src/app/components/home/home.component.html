@@ -10,6 +10,16 @@
       <mat-progress-bar mode="query" color="primary"></mat-progress-bar>
     </div>
     <div class="row mb-2">
+      <div class="col-sm-6 mb-2">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="openDialog()"
+          *appUserIn="true"
+        >
+          Crear lista
+        </button>
+      </div>
       <div class="col-sm-6">
         <mat-form-field appearance="fill">
           <mat-label>Género</mat-label>
