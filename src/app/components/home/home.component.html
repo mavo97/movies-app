@@ -10,23 +10,25 @@
       <mat-progress-bar mode="query" color="primary"></mat-progress-bar>
     </div>
     <div class="row mb-2">
-      <div class="col-sm-6 mb-2">
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="openDialog()"
-          *appUserIn="true"
-        >
+      <div class="col-md-12 mb-2">
+        <button mat-raised-button color="primary" (click)="openDialog()" *appUserIn="true">
           Crear lista
         </button>
       </div>
-      <div class="col-sm-6">
+      <div class="col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Ordenar por</mat-label>
+          <mat-select (selectionChange)="sortBy($event)" [disabled]="loading">
+            <mat-option *ngFor="let option of sortOptions" [value]="option.id">
+              {{ option.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
         <mat-form-field appearance="fill">
           <mat-label>Género</mat-label>
-          <mat-select
-            (selectionChange)="selectGenre($event)"
-            [disabled]="loading"
-          >
+          <mat-select (selectionChange)="selectGenre($event)" [disabled]="loading">
             <mat-option>Todos</mat-option>
             <mat-option *ngFor="let genre of genres" [value]="genre.id">
               {{ genre.name }}
@@ -35,19 +37,11 @@
         </mat-form-field>
       </div>
     </div>
-    <div
-      class="row row-cols-2 row-cols-md-6"
-      *ngIf="moviesToDisplay.length > 0"
-    >
+    <div class="row row-cols-2 row-cols-md-6" *ngIf="moviesToDisplay.length > 0">
       <div class="col" *ngFor="let movie of moviesToDisplay">
         <div class="card border-0 h-100">
-          <app-movie-poster
-            [imgSrc]="movie | imageSrc"
-            [vote_average]="movie.vote_average"
-            [selectButton]="true"
-            [release_date]="movie.release_date"
-            [id]="movie.id"
-          >
+          <app-movie-poster [imgSrc]="movie | imageSrc" [vote_average]="movie.vote_average" [selectButton]="true"
+            [release_date]="movie.release_date" [id]="movie.id">
           </app-movie-poster>
           <div class="card-body">
             <h5 class="card-title fs-6 lh-sms">{{ movie.title }}</h5>
@@ -67,20 +61,12 @@
     </div>
   </div>
   <ng-container *ngIf="!genre">
-    <app-paginator
-      [index]="index"
-      [pagesArray]="pagesArray"
-      [totalPages]="totalPages"
-      (newIndexValue)="sliceListMovies(true, $event)"
-    ></app-paginator>
+    <app-paginator [index]="index" [pagesArray]="pagesArray" [totalPages]="totalPages"
+      (newIndexValue)="sliceListMovies(true, $event)"></app-paginator>
   </ng-container>
   <ng-container *ngIf="genre">
-    <app-paginator
-      [index]="index"
-      [pagesArray]="pagesArray2"
-      [totalPages]="totalPages"
-      (newIndexValue)="sliceListMovies2(true, $event)"
-    ></app-paginator>
+    <app-paginator [index]="index" [pagesArray]="pagesArray2" [totalPages]="totalPages"
+      (newIndexValue)="sliceListMovies2(true, $event)"></app-paginator>
   </ng-container>
   <ng-container *ngIf="!loading">
     <app-movies-list-button *appUserIn></app-movies-list-button>

@@ -31,6 +31,13 @@ export class HomeComponent implements OnInit {
   currentPage: number = 0;
   pagesArray: number[] = [];
   pagesArray2: number[] = [];
+  sortOptions: any[] = [
+    { id: 0, value: 'Agregadas recientemente' },
+    { id: 1, value: 'Fecha de estreno' },
+    { id: 2, value: 'Mejor valoradas' },
+    { id: 3, value: 'Orden alfabetico' },
+  ];
+  orderBy: number = 0;
 
   constructor(
     private moviesService: MoviesServiceService,
@@ -117,7 +124,16 @@ export class HomeComponent implements OnInit {
         this.paginator.pageIndex &&
         (this.paginator.pageIndex = 0);
     } else {
-      this.moviesStorage();
+      // this.moviesStorage();
+      this.genre = false;
+      this.listMoviesCopy = JSON.parse(localStorage.getItem('movies'));
+      this.listMovies = this.listMoviesCopy;
+      this.totalPages = parseInt(
+        JSON.parse(this.lsService.getItem('total_pages'))
+      );
+      this.pagesArray = Array.from(Array(this.totalPages).keys());
+      console.log('ORDER BY', { value: this.orderBy });
+      this.sortBy({ value: this.orderBy });
       this.paginator &&
         this.paginator.pageIndex &&
         (this.paginator.pageIndex = 0);
@@ -223,5 +239,35 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  sortBy(event) {
+    if (event.value === 0) {
+      this.listMoviesCopy = JSON.parse(localStorage.getItem('movies'));
+      this.listMovies = this.listMoviesCopy;
+    }
+    if (event.value === 1) {
+      this.listMovies = this.listMovies.sort((a, b) => {
+        const date = new Date(a.release_date).getTime();
+        const date2 = new Date(b.release_date).getTime();
+        return date2 - date;
+      });
+    }
+    if (event.value === 2) {
+      this.listMovies = this.listMovies.sort((a, b) => {
+        const value = a.vote_average;
+        const value2 = b.vote_average;
+        return value2 - value;
+      });
+    }
+    if (event.value === 3) {
+      this.listMovies = this.listMovies.sort((a, b) => {
+        const textA = a.title.toUpperCase();
+        const textB = b.title.toUpperCase();
+        return textA < textB ? -1 : textA > textB ? 1 : 0;
+      });
+    }
+    this.orderBy = event.value;
+    this.sliceListMovies(true, 0);
   }
 }
