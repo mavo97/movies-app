@@ -33,6 +33,9 @@ import { MovieOverviewComponent } from './components/movies/movie-overview/movie
 import { DialogVideoComponent } from './components/shared/dialog-video/dialog-video.component';
 import { WhatsAppButtonComponent } from './components/shared/whats-app-button/whats-app-button.component';
 import { SearchmovieComponent } from './components/movies/searchmovie/searchmovie.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PanelListComponent } from './components/panel-list/panel-list.component';
+import { EditListComponent } from './components/shared/edit-list/edit-list.component';
 
 // Libraries
 import { SlickCarouselModule } from 'ngx-slick-carousel';
@@ -54,11 +57,11 @@ registerLocaleData(localeEs);
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { environment } from '../environments/environment';
+
+// Directives
 import { UserInDirective } from './directives/user-in.directive';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PanelListComponent } from './components/panel-list/panel-list.component';
-import { EditListComponent } from './components/shared/edit-list/edit-list.component';
 import { AdminDirective } from './directives/admin.directive';
 
 @NgModule({
@@ -111,6 +114,7 @@ import { AdminDirective } from './directives/admin.directive';
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAnalyticsModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent],

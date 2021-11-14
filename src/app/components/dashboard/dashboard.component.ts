@@ -27,6 +27,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   orders: Order[] = [];
   mobile: boolean = false;
+  currentMonth: number = new Date().getMonth() + 1;
+  currentYear: number = new Date().getFullYear();
+  firstDay: number = new Date(
+    this.currentYear,
+    this.currentMonth - 1,
+    1
+  ).getTime();
+  lastDay: number = new Date(this.currentYear, this.currentMonth, 0).getTime();
+  items: number = 0;
 
   constructor(private _ordersService: OrdersService, private _router: Router) {}
 
@@ -40,6 +49,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource(this.orders);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.reducer(this.orders);
     });
 
     if (window.screen.width <= 700) {
@@ -63,7 +73,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   formatDate(date: number): string {
     moment.locale('es');
-    return moment(new Date(date)).startOf('minute').fromNow();
+    const now = new Date().getTime();
+    const result = now - date;
+    if (result >= 6.048e8) {
+      return moment(new Date(date)).format('ll');
+    } else {
+      return moment(new Date(date)).startOf('minute').fromNow();
+    }
+  }
+
+  formatDate2(date: number): string {
+    moment.locale('es');
+    return moment(new Date(date)).format('ll');
   }
 
   openList(id: string) {
@@ -72,5 +93,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   deleteOrder(id: string) {
     this._ordersService.deleteOrder(id);
+  }
+
+  reducer(orders: Order[]) {
+    orders = orders.filter((order) => {
+      if (
+        order.createdDate >= this.firstDay &&
+        order.createdDate <= this.lastDay
+      ) {
+        return order;
+      }
+    });
+    const reducer = (previousValue, currentValue) =>
+      previousValue + currentValue.movies.length;
+    this.items = orders.reduce(reducer, 0);
   }
 }
