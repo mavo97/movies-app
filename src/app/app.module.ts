@@ -59,6 +59,7 @@ import { UserInDirective } from './directives/user-in.directive';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PanelListComponent } from './components/panel-list/panel-list.component';
 import { EditListComponent } from './components/shared/edit-list/edit-list.component';
+import { AdminDirective } from './directives/admin.directive';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { EditListComponent } from './components/shared/edit-list/edit-list.compo
     DashboardComponent,
     PanelListComponent,
     EditListComponent,
+    AdminDirective,
   ],
   imports: [
     BrowserModule,
