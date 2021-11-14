@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="!loading">
   <div class="slider-main">
     <div class="container" *ngIf="!loading">
       <app-trendings-slider [tMovies]="trendingMovies"></app-trendings-slider>
@@ -73,3 +73,4 @@
   </ng-container>
   <app-whats-app-button></app-whats-app-button>
 </div>
+<app-loadingcomponent *ngIf="loading"></app-loadingcomponent>
