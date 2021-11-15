@@ -18,7 +18,7 @@
       <div class="col-md-6">
         <mat-form-field appearance="fill">
           <mat-label>Ordenar por</mat-label>
-          <mat-select (selectionChange)="sortBy($event)" [disabled]="loading">
+          <mat-select (selectionChange)="sortBy($event)" [disabled]="loading || genre">
             <mat-option *ngFor="let option of sortOptions" [value]="option.id">
               {{ option.value }}
             </mat-option>
