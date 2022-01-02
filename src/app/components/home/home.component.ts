@@ -76,6 +76,7 @@ export class HomeComponent implements OnInit {
       const movies2 = movies;
       movies2.forEach((movie) => this.trendingMovies.push(movie));
     }
+    this.listMovies = this.mappingMovies(this.listMovies);
     this.listMoviesCopy = this.listMovies;
 
     this.trendingMovies.sort(function (a, b) {
@@ -269,5 +270,22 @@ export class HomeComponent implements OnInit {
     }
     this.orderBy = event.value;
     this.sliceListMovies(true, 0);
+  }
+
+  mappingMovies(movies: Movie[]): Movie[] {
+    const moviesOne = movies.slice(0, 20);
+    let moviesTwo = movies.filter((movie) => {
+      const findMovie = moviesOne.find((m) => m.id === movie.id);
+      if (!findMovie) {
+        return movie;
+      }
+    });
+    moviesTwo = moviesTwo.sort((a, b) => {
+      const date = new Date(a.release_date).getTime();
+      const date2 = new Date(b.release_date).getTime();
+      return date2 - date;
+    });
+    const finalMovies = moviesOne.concat(moviesTwo);
+    return finalMovies;
   }
 }
