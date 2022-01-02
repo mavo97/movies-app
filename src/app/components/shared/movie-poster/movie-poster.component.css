@@ -33,13 +33,13 @@ img {
 }
 
 .noActive {
-  background: #696969;
-  color: #a9a9a9;
+  background: #d0d0d0;
+  color: #e1e1e1;
   border: none !important;
 }
 .active {
-  background: #1877f2;
-  color: white;
+  background: #fff;
+  color: red;
   border: none !important;
 }
 

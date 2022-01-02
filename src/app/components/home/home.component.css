@@ -2,7 +2,7 @@
 .slider-main {
   color: white;
   /* background-color: #29363d; */
-  background-color: #032541;
+  background-color: #e1e1e1;
   width: 100vw;
   position: relative;
   margin-left: -50vw;
@@ -14,4 +14,10 @@
   margin-top: 20px;
   margin-bottom: 20px;
   max-width: 100%;
+}
+
+@media (max-width: 764px) {
+  .slider-main {
+    background-color: #f6f6f6;
+  }
 }
