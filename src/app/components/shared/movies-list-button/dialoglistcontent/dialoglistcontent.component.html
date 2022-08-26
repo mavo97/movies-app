@@ -1,53 +1,61 @@
-<div style="overflow-y: auto; max-height: 75%">
+<div class="listContainer">
   <h2 mat-dialog-title>
     {{ moviesList.length }}
     {{ movies.length === 1 ? "seleccionado" : "seleccionados" }}
   </h2>
 
+  <div class="container">
+    <form class="mb-2" [formGroup]="form">
+      <label for="mobileInput" class="form-label">Número de telefono</label>
+      <input
+        type="text"
+        class="form-control"
+        id="mobileInput"
+        placeholder="*Número de teléfono opcional..."
+        formControlName="mobile"
+        autocomplete="off"
+      />
+      <span
+        *ngIf="
+          (form.controls['mobile'].errors?.maxlength ||
+            form.controls['mobile'].errors?.minlength ||
+            form.controls['mobile'].errors?.pattern) &&
+          form.controls['mobile'].dirty &&
+          form.controls['mobile'].touched
+        "
+        class="text-danger"
+        >Solo números y deben ser 10 digítos...</span
+      >
+    </form>
+  </div>
+
   <mat-dialog-content class="mat-typography">
     <div class="container main">
       <h3 *ngIf="moviesList.length < 1">No hay elementos seleccionados...</h3>
-      <form class="mb-2" [formGroup]="form">
-        <label for="mobileInput" class="form-label">Número de telefono</label>
-        <input
-          type="text"
-          class="form-control"
-          id="mobileInput"
-          placeholder="*Opcional"
-          formControlName="mobile"
-          autocomplete="off"
-        />
-        <span
-          *ngIf="
-            (form.controls['mobile'].errors?.maxlength ||
-              form.controls['mobile'].errors?.minlength ||
-              form.controls['mobile'].errors?.pattern) &&
-            form.controls['mobile'].dirty &&
-            form.controls['mobile'].touched
-          "
-          class="text-danger"
-          >Solo números y deben ser 10 digítos...</span
-        >
-      </form>
-      <mat-selection-list #movies [multiple]="false">
-        <mat-list-option *ngFor="let movie of moviesList" [value]="movie">
-          {{ movie.title }}
-        </mat-list-option>
-      </mat-selection-list>
-
-      <p style="color: transparent">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac leo
-        eros. Suspendisse bibendum enim augue, in ullamcorper nulla consequat
-        rhoncus.
-      </p>
+      <div class="content">
+        <mat-selection-list #movies [multiple]="false">
+          <mat-list-option
+            *ngFor="let movie of moviesList"
+            [value]="movie"
+            class="line"
+          >
+            {{ movie.title }}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
     </div>
   </mat-dialog-content>
   <mat-divider></mat-divider>
   <mat-dialog-actions align="end">
     <section *ngIf="movies.selectedOptions.selected[0]?.value">
-      <span style="color: #032541">{{
-        movies.selectedOptions.selected[0]?.value.title
-      }}</span
+      <span style="color: #032541"
+        >{{ movies.selectedOptions.selected[0]?.value.title | slice: 0:20
+        }}{{
+          movies.selectedOptions.selected[0]?.value.title &&
+          movies.selectedOptions.selected[0]?.value.title.length > 20
+            ? "..."
+            : ""
+        }}</span
       >&nbsp;&nbsp;
       <button
         mat-mini-fab
@@ -59,19 +67,21 @@
     </section>
   </mat-dialog-actions>
 
-  <mat-dialog-actions align="end">
-    <mat-divider></mat-divider>
-    <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-button (click)="cleanList()">Limpiar lista...</button>
-    <button
-      mat-mini-fab
-      color="primary"
-      style="color: white"
-      [disabled]="!form.valid || moviesList.length < 1"
-      (click)="saveOrder()"
-    >
-      <mat-icon>save</mat-icon>
-    </button>
-    <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
-  </mat-dialog-actions>
+  <div class="bottom">
+    <mat-dialog-actions align="center">
+      <mat-divider></mat-divider>
+      <button mat-button mat-dialog-close>Cerrar</button>
+      <button mat-button (click)="cleanList()">Limpiar lista...</button>
+      <button
+        mat-mini-fab
+        color="primary"
+        style="color: white"
+        [disabled]="!form.valid || moviesList.length < 1"
+        (click)="saveOrder()"
+      >
+        <mat-icon>save</mat-icon>
+      </button>
+      <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+    </mat-dialog-actions>
+  </div>
 </div>

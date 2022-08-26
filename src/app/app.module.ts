@@ -63,6 +63,7 @@ import { environment } from '../environments/environment';
 // Directives
 import { UserInDirective } from './directives/user-in.directive';
 import { AdminDirective } from './directives/admin.directive';
+import { LoadingWithPercentComponent } from './components/shared/loading-with-percent/loading-with-percent.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { AdminDirective } from './directives/admin.directive';
     PanelListComponent,
     EditListComponent,
     AdminDirective,
+    LoadingWithPercentComponent,
   ],
   imports: [
     BrowserModule,

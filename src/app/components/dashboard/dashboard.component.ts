@@ -58,6 +58,41 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       );
       this.mobile = true;
     }
+
+    let movies: any[] = JSON.parse(localStorage.getItem('movies'));
+    movies = movies.map((m) => {
+      return { id: m.id, title: m.title };
+    });
+    movies = movies.map((m) => {
+      const moviesSelections = this.orders.filter((o) => {
+        const findSelection = o.movies.find((s) => s.id === m.id);
+        if (findSelection) {
+          return findSelection;
+        }
+      });
+      return { selections: moviesSelections.length, ...m };
+    });
+    movies = movies.filter((m) => m.selections > 0);
+    movies = movies.sort((a, b) => {
+      return b.selections - a.selections;
+    });
+    console.log(movies, 'movies');
+
+    const movies2: any[] = JSON.parse(localStorage.getItem('movies'));
+    const moviesNotSelected = movies2.filter((m2) => {
+      const find = movies.find((mf) => mf.id === m2.id);
+      if (!find) {
+        return m2;
+      }
+    });
+    const moviesNotSelected2 = moviesNotSelected.map((m) => {
+      return { id: m.id, title: m.title, vote_average: m.vote_average };
+    });
+    console.log(
+      moviesNotSelected2.sort(function (a, b) {
+        return parseFloat(b.vote_average) - parseFloat(a.vote_average);
+      })
+    );
   }
 
   ngAfterViewInit() {}

@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
     { id: 3, value: 'Orden alfabetico' },
   ];
   orderBy: number = 0;
+  total_results: number = 0;
 
   constructor(
     private moviesService: MoviesServiceService,
@@ -48,19 +49,16 @@ export class HomeComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.getGenres();
     await this.moviesStorage();
-
-    // console.log(this.pageSize);
-    // console.log(this.listMovies);
   }
 
   async getMovies() {
     this.loading = true;
-    this.totalPages = await (
-      await this.moviesService
-        .getMoviesList(1, 'original_order.desc')
-        .pipe(take(1))
-        .toPromise()
-    ).total_pages;
+    const data: any = await await this.moviesService
+      .getMoviesList(1, 'original_order.desc')
+      .pipe(take(1))
+      .toPromise();
+    this.totalPages = data.total_pages;
+    this.total_results = data.total_results;
     this.pageSize = this.totalPages;
     this.pagesArray = Array.from(Array(this.totalPages).keys());
     console.log(this.pagesArray, 'PAGES ARRAY');
@@ -88,9 +86,12 @@ export class HomeComponent implements OnInit {
     });
     // console.log(this.trendingMovies);
     this.moviesLength = this.listMovies.length;
-    this.loading = false;
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
     this.lsService.setItem('movies', JSON.stringify(this.listMovies));
     this.lsService.setItem('total_pages', JSON.stringify(this.totalPages));
+    this.lsService.setItem('finished', JSON.stringify(true));
     this.setExpiryStorage();
   }
 
@@ -192,6 +193,7 @@ export class HomeComponent implements OnInit {
     this.moviesLength;
     this.listMoviesCopy = [];
     this.trendingMovies = [];
+    localStorage.clear();
     this.getMovies();
   }
 
@@ -201,8 +203,12 @@ export class HomeComponent implements OnInit {
       JSON.parse(this.lsService.getItem('total_pages'))
     );
     let movies2: Movie[] = JSON.parse(this.lsService.getItem('movies'));
+    const moviesData: any = await this.moviesService
+      .getMoviesList(1, 'original_order.desc')
+      .pipe(take(1))
+      .toPromise();
 
-    if (!this.lsService.compareTime()) {
+    if (movies && Number(moviesData.total_results) === Number(movies.length)) {
       if (movies !== null && total_pages !== null) {
         this.listMovies = movies;
         this.listMoviesCopy = this.listMovies;

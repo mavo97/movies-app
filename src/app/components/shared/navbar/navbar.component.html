@@ -1,36 +1,60 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <a routerLink="/" class="navbar-brand">Movies App</a>
-    <button class="navbar-toggler float-right" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <div class="form-search bg-secondary">
-            <input class="form-control me-2 custom" type="search" placeholder="Buscar" aria-label="Search" #movieSearch
-              (keyup.enter)="searchMovie(movieSearch.value)" />
+    <ng-container *ngIf="dataCompleted()">
+      <button
+        class="navbar-toggler float-right"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <div class="form-search bg-secondary">
+              <input
+                class="form-control me-2 custom"
+                type="search"
+                placeholder="Buscar"
+                aria-label="Search"
+                #movieSearch
+                (keyup.enter)="searchMovie(movieSearch.value)"
+              />
+            </div>
+          </li>
+          <br />
+          <div *ngIf="_authService.auth.user | async as user; else showLogin">
+            <button
+              mat-mini-fab
+              color="primary"
+              (click)="logout()"
+              class="margin"
+            >
+              <mat-icon>exit_to_app</mat-icon>
+            </button>
+            <a mat-mini-fab color="accent" routerLink="panel" class="margin">
+              <i class="fas fa-user-shield"></i>
+            </a>
           </div>
-        </li>
-        <br />
-        <div *ngIf="_authService.auth.user | async as user; else showLogin">
-          <button mat-mini-fab color="primary" (click)="logout()" class="margin">
-            <mat-icon>exit_to_app</mat-icon>
-          </button>
-          <a mat-mini-fab color="accent" routerLink="panel" class="margin">
-            <i class="fas fa-user-shield"></i>
-          </a>
-        </div>
-        <ng-template #showLogin>
-          <button mat-icon-button (click)="login()" class="margin" color="warn">
-            <i class="fab fa-google"></i>
-          </button>
-          <!-- <button mat-icon-button (click)="loginFacebook()" class="margin fb">
+          <ng-template #showLogin>
+            <button
+              mat-icon-button
+              (click)="login()"
+              class="margin"
+              color="warn"
+            >
+              <i class="fab fa-google"></i>
+            </button>
+            <!-- <button mat-icon-button (click)="loginFacebook()" class="margin fb">
             <i class="fab fa-facebook-f"></i>
           </button> -->
-        </ng-template>
-      </ul>
-    </div>
+          </ng-template>
+        </ul>
+      </div>
+    </ng-container>
   </div>
 </nav>

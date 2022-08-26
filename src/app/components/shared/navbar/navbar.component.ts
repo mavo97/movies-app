@@ -44,4 +44,12 @@ export class NavbarComponent implements OnInit {
   logout() {
     this._authService.logout();
   }
+
+  dataCompleted(): boolean {
+    const finished: string = localStorage.getItem('finished');
+    if (finished === 'true') {
+      return true;
+    }
+    return false;
+  }
 }

@@ -64,6 +64,7 @@ export class DialoglistcontentComponent implements OnInit {
     try {
       await this._ordersService.addOrder(order);
       this.openSnackBar('Lista envíada...', 'Success');
+      this.cleanList();
     } catch (error) {
       console.log(error, 'error');
       this.openSnackBar('No se guardo la lista...', 'Vuelve a intentar!');
