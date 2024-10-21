@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-paginator',
@@ -6,31 +7,35 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./paginator.component.css'],
 })
 export class PaginatorComponent implements OnInit {
-  @Input() index: number = 0;
+  @Input() page: number = 0;
   @Input() pagesArray: number[] = [];
   @Input() totalPages: number = 0;
-  @Output() newIndexValue = new EventEmitter<number>();
 
-  constructor() {}
+  constructor(private _router: Router) {}
 
   ngOnInit(): void {}
 
-  decrementIndex(index: number) {
-    if (this.index > 0) {
-      this.newIndexValue.emit(index);
-      console.log(index);
+  decrementPage(page: number) {
+    if (this.page > 0) {
+      this.goToPage(page)
     }
   }
 
-  incrementIndex(index: number) {
-    if (this.index !== this.totalPages - 1) {
-      this.newIndexValue.emit(index);
-      console.log(index);
+  incrementPage(page: number) {
+    if (this.page !== this.totalPages) {
+      this.goToPage(page)
     }
   }
 
-  changeIndexValue(index: number) {
-    this.newIndexValue.emit(index);
-    console.log(index);
+  changePageValue(page: number) {
+    this.goToPage(page)
   }
+
+  goToPage(id: number) {
+    // console.log(id, 'PAGE PAGE');
+    
+    this._router.navigate(['/page', id]);
+  }
+
+
 }

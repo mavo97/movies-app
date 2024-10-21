@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { LocalStorageService } from '../../providers/local-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditListComponent } from '../shared/edit-list/edit-list.component';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -39,14 +40,28 @@ export class HomeComponent implements OnInit {
   ];
   orderBy: number = 0;
   total_results: number = 0;
+  pageId: number;
 
   constructor(
     private moviesService: MoviesServiceService,
     private lsService: LocalStorageService,
-    public _dialog: MatDialog
+    public _dialog: MatDialog,
+    private _route: ActivatedRoute,
+    private _router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
+    // this.pageId = Number(this._route.snapshot.paramMap.get('id'));
+    this._route.params.subscribe((params) => {
+      this.pageId = Number(params['id']);
+      if (!this.pageId) {
+        this.pageId = 1;
+      }
+      if (this.listMovies.length > 0) {
+        this.sliceListMovies(true, this.pageId - 1);
+      }
+    });
+
     await this.getGenres();
     await this.moviesStorage();
   }
@@ -69,13 +84,13 @@ export class HomeComponent implements OnInit {
           .pipe(take(1))
           .toPromise()
       ).results;
-      this.sliceListMovies(false);
       movies.forEach((movie) => this.listMovies.push(movie));
       const movies2 = movies;
       movies2.forEach((movie) => this.trendingMovies.push(movie));
     }
     this.listMovies = this.mappingMovies(this.listMovies);
     this.listMoviesCopy = this.listMovies;
+    this.sliceListMovies(true, this.pageId - 1);
 
     this.trendingMovies.sort(function (a, b) {
       // Turn your strings into dates, and then subtract them
@@ -134,7 +149,7 @@ export class HomeComponent implements OnInit {
         JSON.parse(this.lsService.getItem('total_pages'))
       );
       this.pagesArray = Array.from(Array(this.totalPages).keys());
-      console.log('ORDER BY', { value: this.orderBy });
+      // console.log('ORDER BY', { value: this.orderBy });
       this.sortBy({ value: this.orderBy });
       this.paginator &&
         this.paginator.pageIndex &&
@@ -143,7 +158,7 @@ export class HomeComponent implements OnInit {
   }
 
   sliceListMovies(scroll?: boolean, index?: number) {
-    console.log(index, 'INDEX');
+    // console.log(index, 'INDEX');
     // console.log(index);
     if (index) {
       this.index = index;
@@ -215,7 +230,7 @@ export class HomeComponent implements OnInit {
         this.moviesLength = this.listMovies.length;
         this.totalPages = total_pages;
         this.pagesArray = Array.from(Array(this.totalPages).keys());
-        console.log(this.pagesArray, 'PAGES ARRAY');
+        // console.log(this.pagesArray, 'PAGES ARRAY');
         this.trendingMovies = movies2;
         this.trendingMovies.sort(function (a, b) {
           // Turn your strings into dates, and then subtract them
@@ -225,8 +240,8 @@ export class HomeComponent implements OnInit {
             new Date(a.release_date).getTime()
           );
         });
-        console.log(this.trendingMovies.slice(0, 18));
-        this.sliceListMovies(false, 0);
+        // console.log(this.trendingMovies.slice(0, 18));
+        this.sliceListMovies(true, this.pageId - 1);
       } else {
         await this.getMovies();
       }
@@ -293,5 +308,9 @@ export class HomeComponent implements OnInit {
     });
     const finalMovies = moviesOne.concat(moviesTwo);
     return finalMovies;
+  }
+
+  goToPage(id: number) {
+    this._router.navigate(['/page', id]);
   }
 }

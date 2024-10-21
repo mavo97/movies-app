@@ -1,10 +1,10 @@
 <div class="container" *ngIf="!loading">
-  <div class="slider-main">
+  <!-- <div class="slider-main">
     <div class="container" *ngIf="!loading">
       <app-trendings-slider [tMovies]="trendingMovies"></app-trendings-slider>
       <br />
     </div>
-  </div>
+  </div> -->
   <div class="main-content" id="main-container">
     <!-- <div class="row container mb-3" *ngIf="loading">
       <mat-progress-bar mode="query" color="primary"></mat-progress-bar>
@@ -81,18 +81,9 @@
   </div>
   <ng-container *ngIf="!genre">
     <app-paginator
-      [index]="index"
+      [page]="pageId"
       [pagesArray]="pagesArray"
       [totalPages]="totalPages"
-      (newIndexValue)="sliceListMovies(true, $event)"
-    ></app-paginator>
-  </ng-container>
-  <ng-container *ngIf="genre">
-    <app-paginator
-      [index]="index"
-      [pagesArray]="pagesArray2"
-      [totalPages]="totalPages"
-      (newIndexValue)="sliceListMovies2(true, $event)"
     ></app-paginator>
   </ng-container>
   <ng-container *ngIf="!loading">

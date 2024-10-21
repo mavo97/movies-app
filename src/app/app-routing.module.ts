@@ -9,6 +9,7 @@ import { PanelListComponent } from './components/panel-list/panel-list.component
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'page/:id', component: HomeComponent },
   { path: 'movie/:id', component: MovieOverviewComponent },
   { path: 'buscar/:movie', component: SearchmovieComponent },
   { path: 'panel', component: DashboardComponent, canActivate: [AdminGuard] },
@@ -18,6 +19,7 @@ const routes: Routes = [
     canActivate: [AdminGuard],
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }, // redirect to `first-component`
+  // { path: '', redirectTo: '/page/1', pathMatch: 'full' },
 ];
 
 @NgModule({
