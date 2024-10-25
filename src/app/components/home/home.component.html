@@ -24,7 +24,8 @@
         <mat-form-field appearance="fill">
           <mat-label>Género</mat-label>
           <mat-select
-            (selectionChange)="selectGenre($event.value, true)"
+            [(ngModel)]="genreSelectedInSelect"
+            (selectionChange)="changeGenreFromSelect($event.value)"
             [disabled]="loading"
           >
             <mat-option [value]="0">Todos</mat-option>

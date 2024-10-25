@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
   total_results: number = 0;
   pageId: number = 1;
   genreSelected: number | string;
+  genreSelectedInSelect: number | string;
   genreSelectedCopy: number | string;
   loadingPaginator: boolean;
   loadingMovies: boolean;
@@ -134,6 +135,7 @@ export class HomeComponent implements OnInit {
 
       this.genre = true;
       this.genreSelected = $event;
+      this.genreSelectedInSelect = this.genreSelected;
 
       this.listMoviesCopy = this.listMoviesCopy.filter((movie) => {
         const verify = movie.genre_ids.includes($event);
@@ -323,5 +325,9 @@ export class HomeComponent implements OnInit {
 
   goToPage(id: number) {
     this._router.navigate(['/page', id]);
+  }
+
+  changeGenreFromSelect(genre: any): void {
+    this.selectGenre(genre, true);
   }
 }
