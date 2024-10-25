@@ -18,6 +18,13 @@ nav.pages {
   background: #fff !important;
   color: #032541 !important;
   cursor: pointer;
+  width: 40px;
+  min-width: 40px;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
 }
 
 @media (max-width: 1024px) {
@@ -25,6 +32,8 @@ nav.pages {
     padding-bottom: 1rem;
   }
   .page-item .page-link {
-    font-size: 1.2rem;
+    font-size: 0.9rem;
+    width: 35px;
+    min-width: 35px;
   }
 }

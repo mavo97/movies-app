@@ -44,4 +44,9 @@ export class PaginatorComponent implements OnInit {
       this._router.navigate(['/page', id]);
     }
   }
+
+  onSelectPageChange(): void {
+    this.page = Number(this.page);
+    this.changePageValue(this.page);
+  }
 }

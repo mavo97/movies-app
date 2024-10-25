@@ -1,26 +1,63 @@
 <div>
-    <nav class="pages">
-        <ul class="pagination pagination justify-content-center">
-            <li class="page-item" [ngClass]="{disabled: page === 1}">
-                <a class="page-link" (click)="decrementPage(page - 1)">
-                    <i class="fas fa-chevron-circle-left"></i>
-                </a>
-            </li>
-            <li class="page-item" [ngClass]="{active: pag + 1 === page}"
-                *ngFor="let pag of pagesArray | slice: ((page === 5 || page >= 4) ? ((page + 3 === totalPages || page + 2 === totalPages || page + 1 === totalPages || page === totalPages) ? totalPages - 5 : page - 2) : 0) :  ((page === 5 || page >= 4) ? page + 3 : 5)">
-                <a class="page-link" (click)="changePageValue(pag + 1)">{{pag + 1}}</a>
-            </li>
-            <li class="page-item" [ngClass]="{disabled: page === totalPages}">
-                <a class="page-link" (click)="incrementPage(page + 1)">
-                    <i class="fas fa-chevron-circle-right"></i>
-                </a>
-            </li>
-        </ul>
-
-    </nav>
-    <div class="d-flex justify-content-center pb-5">
-        <p class="fs-5">
-           {{ page }} de {{ totalPages }}
-        </p>
+  <div class="row justify-content-center mb-3">
+    <div class="col-8 col-md-2">
+      <select
+        class="form-select form-select-sm"
+        (change)="onSelectPageChange()"
+        [(ngModel)]="page"
+      >
+        <option *ngFor="let pag of pagesArray" [value]="pag + 1">
+          {{ pag + 1 }}
+        </option>
+      </select>
     </div>
+  </div>
+  <nav class="pages">
+    <ul class="pagination pagination justify-content-center">
+      <li class="page-item" [ngClass]="{ disabled: page === 1 }">
+        <a class="page-link" (click)="changePageValue(1)">
+          <i class="fas fa-step-backward"></i>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{ disabled: page === 1 }">
+        <a class="page-link" (click)="decrementPage(page - 1)">
+          <i class="fas fa-chevron-circle-left"></i>
+        </a>
+      </li>
+      <li
+        class="page-item"
+        [ngClass]="{ active: pag + 1 === page }"
+        *ngFor="
+          let pag of pagesArray
+            | slice
+              : (page === 5 || page >= 4
+                  ? page + 3 === totalPages ||
+                    page + 2 === totalPages ||
+                    page + 1 === totalPages ||
+                    page === totalPages
+                    ? totalPages - 5
+                    : page - 2
+                  : 0)
+              : (page === 5 || page >= 4 ? page + 3 : 5)
+        "
+      >
+        <a class="page-link" (click)="changePageValue(pag + 1)">{{
+          pag + 1
+        }}</a>
+      </li>
+      <li class="page-item" [ngClass]="{ disabled: page === totalPages }">
+        <a class="page-link" (click)="incrementPage(page + 1)">
+          <i class="fas fa-chevron-circle-right"></i>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{ disabled: page === totalPages }">
+        <a class="page-link" (click)="changePageValue(totalPages)">
+          <i class="fas fa-step-forward"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="d-flex justify-content-center pb-5">
+    <p class="fs-5">{{ page }} de {{ totalPages }}</p>
+  </div>
 </div>
