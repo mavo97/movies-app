@@ -22,25 +22,12 @@
       </div>
       <div class="col-md-6">
         <mat-form-field appearance="fill">
-          <mat-label>Ordenar por</mat-label>
-          <mat-select
-            (selectionChange)="sortBy($event)"
-            [disabled]="loading || genre"
-          >
-            <mat-option *ngFor="let option of sortOptions" [value]="option.id">
-              {{ option.value }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-md-6">
-        <mat-form-field appearance="fill">
           <mat-label>Género</mat-label>
           <mat-select
-            (selectionChange)="selectGenre($event)"
+            (selectionChange)="selectGenre($event.value, true)"
             [disabled]="loading"
           >
-            <mat-option>Todos</mat-option>
+            <mat-option [value]="0">Todos</mat-option>
             <mat-option *ngFor="let genre of genres" [value]="genre.id">
               {{ genre.name }}
             </mat-option>
@@ -65,25 +52,39 @@
           <div class="card-body">
             <h5 class="card-title fs-6 lh-sms">{{ movie.title }}</h5>
             <p class="card-text">
-              {{ movie.release_date | date: "MMMM d, yyyy" | titlecase }}
+              {{ movie.release_date | date : "MMMM d, yyyy" | titlecase }}
             </p>
           </div>
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="moviesToDisplay.length < 1">
+    <div class="row" *ngIf="moviesToDisplay.length === 0 && !loadingMovies">
       <div class="col-sm-12">
         <div class="alert alert-info" role="alert">
           No se encontraron resultados!
         </div>
       </div>
     </div>
+    <div *ngIf="loadingMovies" class="loadingMoviesClass">
+      <app-loadingcomponent></app-loadingcomponent>
+    </div>
   </div>
-  <ng-container *ngIf="!genre">
+  <ng-container *ngIf="!genre && !loadingPaginator">
     <app-paginator
-      [page]="pageId"
       [pagesArray]="pagesArray"
       [totalPages]="totalPages"
+      [page]="pageId"
+      (newIndexValue)="sliceListMovies(true, $event)"
+    ></app-paginator>
+  </ng-container>
+  <ng-container *ngIf="genre && !loadingPaginator">
+    <app-paginator
+      [pagesArray]="pagesArray2"
+      [totalPages]="totalPages"
+      [genreSelected]="genreSelected"
+      [page]="pageId"
+      [genre]="genre"
+      (newIndexValue)="sliceListMoviesByGenre(true, $event)"
     ></app-paginator>
   </ng-container>
   <ng-container *ngIf="!loading">

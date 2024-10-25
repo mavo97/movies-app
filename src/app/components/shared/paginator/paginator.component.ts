@@ -10,6 +10,8 @@ export class PaginatorComponent implements OnInit {
   @Input() page: number = 0;
   @Input() pagesArray: number[] = [];
   @Input() totalPages: number = 0;
+  @Input() genre: boolean;
+  @Input() genreSelected: number;
 
   constructor(private _router: Router) {}
 
@@ -17,25 +19,29 @@ export class PaginatorComponent implements OnInit {
 
   decrementPage(page: number) {
     if (this.page > 0) {
-      this.goToPage(page)
+      this.goToPage(page);
     }
   }
 
   incrementPage(page: number) {
     if (this.page !== this.totalPages) {
-      this.goToPage(page)
+      this.goToPage(page);
     }
   }
 
   changePageValue(page: number) {
-    this.goToPage(page)
+    this.goToPage(page);
   }
 
   goToPage(id: number) {
-    // console.log(id, 'PAGE PAGE');
-    
-    this._router.navigate(['/page', id]);
+    if (this.genre) {
+      this._router.navigate([`/page/${id}`], {
+        queryParams: { genre: this.genreSelected },
+      });
+    }
+
+    if (!this.genre) {
+      this._router.navigate(['/page', id]);
+    }
   }
-
-
 }

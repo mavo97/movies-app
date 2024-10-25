@@ -40,7 +40,11 @@ export class HomeComponent implements OnInit {
   ];
   orderBy: number = 0;
   total_results: number = 0;
-  pageId: number;
+  pageId: number = 1;
+  genreSelected: number | string;
+  genreSelectedCopy: number | string;
+  loadingPaginator: boolean;
+  loadingMovies: boolean;
 
   constructor(
     private moviesService: MoviesServiceService,
@@ -51,59 +55,58 @@ export class HomeComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    // this.pageId = Number(this._route.snapshot.paramMap.get('id'));
     this._route.params.subscribe((params) => {
-      this.pageId = Number(params['id']);
-      if (!this.pageId) {
-        this.pageId = 1;
-      }
-      if (this.listMovies.length > 0) {
-        this.sliceListMovies(true, this.pageId - 1);
-      }
+      this.pageId = Number(params['id']) || 1;
+      this.loadingMovies = true;
+      this.validateIfExistGenreParam();
     });
-
+    this.loadingMovies = true;
     await this.getGenres();
     await this.moviesStorage();
   }
 
   async getMovies() {
     this.loading = true;
-    const data: any = await await this.moviesService
+
+    const data: any = await this.moviesService
       .getMoviesList(1, 'original_order.desc')
       .pipe(take(1))
       .toPromise();
+
     this.totalPages = data.total_pages;
     this.total_results = data.total_results;
     this.pageSize = this.totalPages;
-    this.pagesArray = Array.from(Array(this.totalPages).keys());
-    console.log(this.pagesArray, 'PAGES ARRAY');
-    for (let i = 1; i <= this.pageSize; i++) {
-      const movies = await (
-        await this.moviesService
-          .getMoviesList(i, 'original_order.desc')
-          .pipe(take(1))
-          .toPromise()
-      ).results;
-      movies.forEach((movie) => this.listMovies.push(movie));
-      const movies2 = movies;
-      movies2.forEach((movie) => this.trendingMovies.push(movie));
-    }
-    this.listMovies = this.mappingMovies(this.listMovies);
-    this.listMoviesCopy = this.listMovies;
-    this.sliceListMovies(true, this.pageId - 1);
+    this.pagesArray = Array.from({ length: this.totalPages }, (_, i) => i);
 
-    this.trendingMovies.sort(function (a, b) {
-      // Turn your strings into dates, and then subtract them
-      // to get a value that is either negative, positive, or zero.
-      return (
+    const moviePromises = Array.from({ length: this.pageSize }, (_, i) =>
+      this.moviesService
+        .getMoviesList(i + 1, 'original_order.desc')
+        .pipe(take(1))
+        .toPromise()
+    );
+
+    const allMovies = await Promise.all(moviePromises);
+
+    this.listMovies = allMovies
+      .map((page) => page.results)
+      .reduce((acc, val) => acc.concat(val), []);
+    this.trendingMovies = [...this.listMovies];
+
+    this.listMovies = this.mappingMovies(this.listMovies);
+    this.trendingMovies.sort(
+      (a, b) =>
         new Date(b.release_date).getTime() - new Date(a.release_date).getTime()
-      );
-    });
-    // console.log(this.trendingMovies);
+    );
+
+    this.listMoviesCopy = this.listMovies;
     this.moviesLength = this.listMovies.length;
+
     setTimeout(() => {
       this.loading = false;
-    }, 1000);
+    }, 100);
+
+    this.sliceListMovies(true, this.pageId - 1);
+
     this.lsService.setItem('movies', JSON.stringify(this.listMovies));
     this.lsService.setItem('total_pages', JSON.stringify(this.totalPages));
     this.lsService.setItem('finished', JSON.stringify(true));
@@ -116,18 +119,24 @@ export class HomeComponent implements OnInit {
       .pipe(take(1))
       .toPromise();
     await this.genreResponse.genres.forEach((genre) => this.genres.push(genre));
-
-    // console.log(this.genres);
   }
 
-  selectGenre($event: any) {
-    // console.log($event);
+  selectGenre($event: any, fromSelect?: boolean) {
+    this.loadingPaginator = true;
+    this.loadingMovies = true;
     this.listMoviesCopy = this.listMovies;
-    if ($event.value !== undefined) {
+
+    if ($event !== undefined && $event !== 0) {
+      let resetPages: boolean;
+      if (fromSelect && $event !== this.genreSelected) {
+        resetPages = true;
+      }
+
       this.genre = true;
+      this.genreSelected = $event;
 
       this.listMoviesCopy = this.listMoviesCopy.filter((movie) => {
-        const verify = movie.genre_ids.includes($event.value);
+        const verify = movie.genre_ids.includes($event);
         if (verify) {
           return movie;
         }
@@ -136,10 +145,13 @@ export class HomeComponent implements OnInit {
       this.moviesLength = this.listMoviesCopy.length;
       this.totalPages = Math.ceil(this.listMoviesCopy.length / 20);
       this.pagesArray2 = Array.from(Array(this.totalPages).keys());
-      this.sliceListMovies2(false);
-      this.paginator &&
-        this.paginator.pageIndex &&
-        (this.paginator.pageIndex = 0);
+
+      this.sliceListMoviesByGenre(true, resetPages ? 0 : this.pageId - 1);
+      if (resetPages) {
+        this._router.navigate([`/page/1`], {
+          queryParams: { genre: this.genreSelected },
+        });
+      }
     } else {
       // this.moviesStorage();
       this.genre = false;
@@ -149,51 +161,39 @@ export class HomeComponent implements OnInit {
         JSON.parse(this.lsService.getItem('total_pages'))
       );
       this.pagesArray = Array.from(Array(this.totalPages).keys());
-      // console.log('ORDER BY', { value: this.orderBy });
       this.sortBy({ value: this.orderBy });
-      this.paginator &&
-        this.paginator.pageIndex &&
-        (this.paginator.pageIndex = 0);
+      this._router.navigate(['/page', 1]);
     }
+
+    setTimeout(() => {
+      this.loadingPaginator = false;
+    }, 100);
   }
 
-  sliceListMovies(scroll?: boolean, index?: number) {
-    // console.log(index, 'INDEX');
-    // console.log(index);
-    if (index) {
-      this.index = index;
-      this.moviesToDisplay = this.listMovies.slice(
-        index * 20,
-        (index + 1) * 20
-      );
-    } else {
-      this.index = 0;
-      this.moviesToDisplay = this.listMovies.slice(0, 20);
-    }
+  sliceListMovies(scroll: boolean = false, index: number = 0) {
+    this.index = index;
+    this.moviesToDisplay = this.listMovies.slice(index * 20, (index + 1) * 20);
+    this.loadingMovies = false;
+
     if (scroll) {
       this.goToTop();
     }
   }
 
-  sliceListMovies2(scroll?: boolean, index?: number) {
-    // console.log(index);
-    if (index) {
-      this.index = index;
-      this.moviesToDisplay = this.listMoviesCopy.slice(
-        index * 20,
-        (index + 1) * 20
-      );
-    } else {
-      this.index = 0;
-      this.moviesToDisplay = this.listMoviesCopy.slice(0, 20);
-    }
+  sliceListMoviesByGenre(scroll: boolean = false, index: number = 0) {
+    this.index = index;
+    this.moviesToDisplay = this.listMoviesCopy.slice(
+      index * 20,
+      (index + 1) * 20
+    );
+    this.loadingMovies = false;
+
     if (scroll) {
       this.goToTop();
     }
   }
 
   goToTop() {
-    // console.log('gototop');
     window.scroll(0, 0);
   }
 
@@ -213,42 +213,55 @@ export class HomeComponent implements OnInit {
   }
 
   async moviesStorage() {
-    let movies: Movie[] = JSON.parse(this.lsService.getItem('movies'));
-    const total_pages: number = parseInt(
-      JSON.parse(this.lsService.getItem('total_pages'))
+    const movies: Movie[] = JSON.parse(this.lsService.getItem('movies'));
+    const totalPages: number = parseInt(
+      this.lsService.getItem('total_pages'),
+      10
     );
-    let movies2: Movie[] = JSON.parse(this.lsService.getItem('movies'));
     const moviesData: any = await this.moviesService
       .getMoviesList(1, 'original_order.desc')
       .pipe(take(1))
       .toPromise();
 
-    if (movies && Number(moviesData.total_results) === Number(movies.length)) {
-      if (movies !== null && total_pages !== null) {
-        this.listMovies = movies;
-        this.listMoviesCopy = this.listMovies;
-        this.moviesLength = this.listMovies.length;
-        this.totalPages = total_pages;
-        this.pagesArray = Array.from(Array(this.totalPages).keys());
-        // console.log(this.pagesArray, 'PAGES ARRAY');
-        this.trendingMovies = movies2;
-        this.trendingMovies.sort(function (a, b) {
-          // Turn your strings into dates, and then subtract them
-          // to get a value that is either negative, positive, or zero.
-          return (
-            new Date(b.release_date).getTime() -
-            new Date(a.release_date).getTime()
-          );
-        });
-        // console.log(this.trendingMovies.slice(0, 18));
-        this.sliceListMovies(true, this.pageId - 1);
-      } else {
-        await this.getMovies();
-      }
+    const moviesAreValid =
+      movies && Number(moviesData.total_results) === movies.length;
+
+    if (moviesAreValid && totalPages) {
+      this.listMovies = movies;
+      this.listMoviesCopy = [...movies];
+      this.moviesLength = movies.length;
+      this.totalPages = totalPages;
+      this.pagesArray = Array.from({ length: totalPages }, (_, i) => i);
+
+      this.trendingMovies = [...movies].sort((a, b) => {
+        return (
+          new Date(b.release_date).getTime() -
+          new Date(a.release_date).getTime()
+        );
+      });
+
+      this.validateIfExistGenreParam();
     } else {
+      this._router.navigate(['/']);
       await localStorage.clear();
       await this.getMovies();
     }
+  }
+
+  validateIfExistGenreParam(): void {
+    this._route.queryParams.subscribe((queryParams) => {
+      const genre = queryParams['genre']
+        ? Number(queryParams['genre'])
+        : undefined;
+      if (genre) {
+        this.genre = true;
+        this.genreSelected = Number(genre);
+        this.selectGenre(this.genreSelected);
+      } else {
+        this.genre = false;
+        this.sliceListMovies(true, this.pageId - 1);
+      }
+    });
   }
 
   setExpiryStorage() {
@@ -258,9 +271,7 @@ export class HomeComponent implements OnInit {
   openDialog() {
     const dialogRef = this._dialog.open(EditListComponent);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   sortBy(event) {
