@@ -8,6 +8,8 @@ import { AuthServiceService } from '../../../providers/auth-service.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  toggle: boolean;
+
   constructor(
     private router: Router,
     public _authService: AuthServiceService
@@ -51,5 +53,9 @@ export class NavbarComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  oppenToggle(): void {
+    this.toggle = this.toggle === true ? false : true;
   }
 }

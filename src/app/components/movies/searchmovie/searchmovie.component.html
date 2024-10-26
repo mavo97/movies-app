@@ -1,10 +1,14 @@
 <div class="container" *ngIf="loading">
   <app-loadingcomponent></app-loadingcomponent>
 </div>
-<div class="container" *ngIf="!loading">
+<div class="container mt-3" *ngIf="!loading">
+  <button class="btn btn-warning mb-2" (click)="return()">
+    Volver a página inicial
+  </button>
+  <mat-divider></mat-divider>
   <div *ngIf="movie && movieList">
     <div class="alert alert-secondary" role="alert" *ngIf="movie.length > 0">
-      Un total de {{ totalResults }} resultados para {{ movie }}
+      Un total de {{ movieList.length }} resultados para <b>{{ movie }}</b>
     </div>
     <div class="row row-cols-2 row-cols-md-6" *ngIf="movieList.length > 0">
       <div class="col" *ngFor="let movie of movieList">
@@ -14,29 +18,29 @@
             [vote_average]="movie.vote_average"
             [release_date]="movie.release_date"
             [id]="movie.id"
-            [idExist]="movie.id"
             [movies]="moviesStock"
+            [selectButton]="true"
           >
           </app-movie-poster>
           <div class="card-body">
             <h5 class="card-title fs-6 lh-sms">{{ movie.title }}</h5>
             <p class="card-text">
-              {{ movie.release_date | date: "MMMM d, yyyy" | titlecase }}
+              {{ movie.release_date | date : "MMMM d, yyyy" | titlecase }}
             </p>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row" *ngIf="movieList.length < 1">
+    <!-- <div class="row" *ngIf="movieList.length === 0">
       <div class="col-sm-12">
         <div class="alert alert-info" role="alert">
           No se encontraron resultados!
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
-  <mat-paginator
+  <!-- <mat-paginator
     [length]="moviesLength"
     [hidePageSize]="true"
     [pageSize]="20"
@@ -45,5 +49,8 @@
     (page)="sliceListMovies($event)"
     [showFirstLastButtons]="true"
   >
-  </mat-paginator>
+  </mat-paginator> -->
+  <ng-container *ngIf="!loading">
+    <app-movies-list-button *appUserIn></app-movies-list-button>
+  </ng-container>
 </div>
