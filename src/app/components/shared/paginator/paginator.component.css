@@ -27,6 +27,16 @@ nav.pages {
   padding: 0.5rem;
 }
 
+.page-item .page-link .fas {
+  width: 40px;
+  min-width: 40px;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.2rem;
+}
+
 @media (max-width: 1024px) {
   nav.pages {
     padding-bottom: 1rem;
