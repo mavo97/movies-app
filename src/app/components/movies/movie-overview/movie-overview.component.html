@@ -3,7 +3,9 @@
   <app-loadingcomponent></app-loadingcomponent>
 </div>
 <div class="container" *ngIf="!loading">
-  <button class="btn btn-warning" (click)="return()">Regresar</button>
+  <button class="btn btn-warning" (click)="return()" [disabled]="dialogIsOpen">
+    Regresar
+  </button>
   <mat-divider></mat-divider>
 
   <div class="row">
@@ -28,6 +30,7 @@
         </figcaption>
         <button
           class="btn btn-primary rounded-pill btn-block mt-2"
+          [disabled]="dialogIsOpen"
           (click)="openDialog()"
         >
           <i class="fab fa-youtube"></i> Ver trailer
@@ -44,7 +47,7 @@
               </h1>
             </li>
             <li class="badge bg-primary mb-1">
-              {{ movie.release_date | slice: 0:4 }}
+              {{ movie.release_date | slice : 0 : 4 }}
             </li>
             <li class="mb-2">
               <ul class="list-inline">
@@ -91,7 +94,6 @@
       </div>
     </div>
   </div>
-  <app-whats-app-button></app-whats-app-button>
-
+  <app-movies-list-button></app-movies-list-button>
   <mat-divider></mat-divider>
 </div>
