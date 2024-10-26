@@ -12,10 +12,15 @@ export class PaginatorComponent implements OnInit {
   @Input() totalPages: number = 0;
   @Input() genre: boolean;
   @Input() genreSelected: number;
+  mobile: boolean;
 
   constructor(private _router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (window.screen.width <= 800) {
+      this.mobile = true;
+    }
+  }
 
   decrementPage(page: number) {
     if (this.page > 0) {

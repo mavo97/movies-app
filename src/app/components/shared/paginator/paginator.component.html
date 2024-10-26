@@ -1,62 +1,125 @@
 <div>
-  <div class="row justify-content-center mb-3">
-    <div class="col-8 col-md-2">
-      <select
-        class="form-select form-select-sm"
-        (change)="onSelectPageChange()"
-        [(ngModel)]="page"
-      >
-        <option *ngFor="let pag of pagesArray" [value]="pag + 1">
-          Página {{ pag + 1 }}
-        </option>
-      </select>
+  <ng-container *ngIf="mobile">
+    <div class="container mb-3">
+      <div class="row">
+        <div class="col-3">
+          <div class="row">
+            <div class="col-6 p-1 d-flex justify-content-center">
+              <button
+                class="btn btn-primary btn-sm"
+                [disabled]="page === 1"
+                (click)="changePageValue(1)"
+              >
+                <i class="fas fa-step-backward"></i>
+              </button>
+            </div>
+            <div class="col-6 p-1 d-flex justify-content-center">
+              <button
+                class="btn btn-primary btn-sm"
+                [disabled]="page === 1"
+                (click)="decrementPage(page - 1)"
+              >
+                <i class="fas fa-chevron-circle-left"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 p-1">
+          <select
+            class="form-select form-select-sm"
+            (change)="onSelectPageChange()"
+            [(ngModel)]="page"
+          >
+            <option *ngFor="let pag of pagesArray" [value]="pag + 1">
+              Página {{ pag + 1 }}
+            </option>
+          </select>
+        </div>
+        <div class="col-3">
+          <div class="row">
+            <div class="col-6 p-1 d-flex justify-content-center">
+              <button
+                class="btn btn-primary btn-sm"
+                [disabled]="page === totalPages"
+                (click)="incrementPage(page + 1)"
+              >
+                <i class="fas fa-chevron-circle-right"></i>
+              </button>
+            </div>
+            <div class="col-6 p-1 d-flex justify-content-center">
+              <button
+                class="btn btn-primary btn-sm"
+                [disabled]="page === totalPages"
+                (click)="changePageValue(totalPages)"
+              >
+                <i class="fas fa-step-forward"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <nav class="pages">
-    <ul class="pagination pagination justify-content-center">
-      <li class="page-item" [ngClass]="{ disabled: page === 1 }">
-        <a class="page-link" (click)="changePageValue(1)">
-          <i class="fas fa-step-backward"></i>
-        </a>
-      </li>
-      <li class="page-item" [ngClass]="{ disabled: page === 1 }">
-        <a class="page-link" (click)="decrementPage(page - 1)">
-          <i class="fas fa-chevron-circle-left"></i>
-        </a>
-      </li>
-      <li
-        class="page-item"
-        [ngClass]="{ active: pag + 1 === page }"
-        *ngFor="
-          let pag of pagesArray
-            | slice
-              : (page === 5 || page >= 4
-                  ? page + 3 === totalPages ||
-                    page + 2 === totalPages ||
-                    page + 1 === totalPages ||
-                    page === totalPages
-                    ? totalPages - 5
-                    : page - 2
-                  : 0)
-              : (page === 5 || page >= 4 ? page + 3 : 5)
-        "
-      >
-        <a class="page-link" (click)="changePageValue(pag + 1)">{{
-          pag + 1
-        }}</a>
-      </li>
-      <li class="page-item" [ngClass]="{ disabled: page === totalPages }">
-        <a class="page-link" (click)="incrementPage(page + 1)">
-          <i class="fas fa-chevron-circle-right"></i>
-        </a>
-      </li>
-      <li class="page-item" [ngClass]="{ disabled: page === totalPages }">
-        <a class="page-link" (click)="changePageValue(totalPages)">
-          <i class="fas fa-step-forward"></i>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  </ng-container>
+  <ng-container *ngIf="!mobile">
+    <div class="row justify-content-center mb-3">
+      <div class="col-8 col-md-2">
+        <select
+          class="form-select form-select-sm"
+          (change)="onSelectPageChange()"
+          [(ngModel)]="page"
+        >
+          <option *ngFor="let pag of pagesArray" [value]="pag + 1">
+            Página {{ pag + 1 }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <nav class="pages">
+      <ul class="pagination pagination justify-content-center">
+        <li class="page-item" [ngClass]="{ disabled: page === 1 }">
+          <a class="page-link" (click)="changePageValue(1)">
+            <i class="fas fa-step-backward"></i>
+          </a>
+        </li>
+        <li class="page-item" [ngClass]="{ disabled: page === 1 }">
+          <a class="page-link" (click)="decrementPage(page - 1)">
+            <i class="fas fa-chevron-circle-left"></i>
+          </a>
+        </li>
+        <li
+          class="page-item"
+          [ngClass]="{ active: pag + 1 === page }"
+          *ngFor="
+            let pag of pagesArray
+              | slice
+                : (page === 5 || page >= 4
+                    ? page + 3 === totalPages ||
+                      page + 2 === totalPages ||
+                      page + 1 === totalPages ||
+                      page === totalPages
+                      ? totalPages - 5
+                      : page - 2
+                    : 0)
+                : (page === 5 || page >= 4 ? page + 3 : 5)
+          "
+        >
+          <a class="page-link" (click)="changePageValue(pag + 1)">{{
+            pag + 1
+          }}</a>
+        </li>
+        <li class="page-item" [ngClass]="{ disabled: page === totalPages }">
+          <a class="page-link" (click)="incrementPage(page + 1)">
+            <i class="fas fa-chevron-circle-right"></i>
+          </a>
+        </li>
+        <li class="page-item" [ngClass]="{ disabled: page === totalPages }">
+          <a class="page-link" (click)="changePageValue(totalPages)">
+            <i class="fas fa-step-forward"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </ng-container>
   <div class="d-flex justify-content-center pb-5">
     <p class="fs-5">{{ page }} de {{ totalPages }}</p>
   </div>
