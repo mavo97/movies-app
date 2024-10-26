@@ -17,7 +17,10 @@ export class MovieOverviewComponent implements OnInit {
   movie: Movie;
   value: number;
   video: Trailer;
+  videos: Trailer[] = [];
   loading: boolean;
+  dialogIsOpen: boolean;
+
   constructor(
     private routeActivated: ActivatedRoute,
     private movieService: MoviesServiceService,
@@ -42,23 +45,45 @@ export class MovieOverviewComponent implements OnInit {
       .pipe(take(1))
       .toPromise();
     this.value = Math.round(this.movie.vote_average * 10);
-    this.video = (
+
+    this.videos = (
       await this.movieService.getVideoId(this.movieId).pipe(take(1)).toPromise()
-    ).results[0];
+    ).results;
+
+    this.video = this.getOfficialTrailer();
+
     this.loading = false;
   }
 
   openDialog() {
-    this.dialog.open(DialogVideoComponent, {
+    this.dialogIsOpen = true;
+    const dialogRef = this.dialog.open(DialogVideoComponent, {
+      disableClose: true,
       data: {
         videoKey: this.video.key,
         videoName: this.video.name,
       },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.dialogIsOpen = false;
     });
   }
 
   // Regresar una pagina atrás
   return() {
     window.history.back();
+  }
+
+  getOfficialTrailer(): Trailer {
+    const officialTrailer: Trailer = this.videos.find(
+      (v) => v.name === 'Official Trailer'
+    );
+
+    if (officialTrailer) {
+      return officialTrailer;
+    }
+
+    return this.videos[0];
   }
 }
